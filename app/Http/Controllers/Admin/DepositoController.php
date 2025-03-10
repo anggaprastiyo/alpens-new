@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyDepositoRequest;
 use App\Http\Requests\StoreDepositoRequest;
 use App\Http\Requests\UpdateDepositoRequest;
@@ -11,67 +12,20 @@ use App\Models\Deposito;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class DepositoController extends Controller
 {
-    public function index(Request $request)
+    use CsvImportTrait;
+
+    public function index()
     {
         abort_if(Gate::denies('deposito_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Deposito::with(['asset_migration'])->select(sprintf('%s.*', (new Deposito)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'deposito_show';
-                $editGate      = 'deposito_edit';
-                $deleteGate    = 'deposito_delete';
-                $crudRoutePart = 'depositos';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->addColumn('asset_migration_name', function ($row) {
-                return $row->asset_migration ? $row->asset_migration->name : '';
-            });
-
-            $table->editColumn('program', function ($row) {
-                return $row->program ? Deposito::PROGRAM_SELECT[$row->program] : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('bunga', function ($row) {
-                return $row->bunga ? $row->bunga : '';
-            });
-            $table->editColumn('nilai_pasar', function ($row) {
-                return $row->nilai_pasar ? $row->nilai_pasar : '';
-            });
-            $table->editColumn('macaulay_duration', function ($row) {
-                return $row->macaulay_duration ? $row->macaulay_duration : '';
-            });
-            $table->editColumn('modified_duration', function ($row) {
-                return $row->modified_duration ? $row->modified_duration : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'asset_migration']);
-
-            return $table->make(true);
-        }
+        $depositos = Deposito::with(['asset_migration'])->get();
 
         $asset_migrations = AssetMigration::get();
 
-        return view('admin.depositos.index', compact('asset_migrations'));
+        return view('admin.depositos.index', compact('asset_migrations', 'depositos'));
     }
 
     public function create()

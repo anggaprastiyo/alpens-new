@@ -12,48 +12,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class DataSapController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('data_sap_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = DataSap::query()->select(sprintf('%s.*', (new DataSap)->table));
-            $table = Datatables::of($query);
+        $dataSaps = DataSap::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'data_sap_show';
-                $editGate      = 'data_sap_edit';
-                $deleteGate    = 'data_sap_delete';
-                $crudRoutePart = 'data-saps';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.dataSaps.index');
+        return view('admin.dataSaps.index', compact('dataSaps'));
     }
 
     public function create()

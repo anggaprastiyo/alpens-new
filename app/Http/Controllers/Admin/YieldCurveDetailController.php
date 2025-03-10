@@ -12,67 +12,18 @@ use App\Models\YieldCurveDetail;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class YieldCurveDetailController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('yield_curve_detail_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = YieldCurveDetail::with(['yield_curve'])->select(sprintf('%s.*', (new YieldCurveDetail)->table));
-            $table = Datatables::of($query);
+        $yieldCurveDetails = YieldCurveDetail::with(['yield_curve'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'yield_curve_detail_show';
-                $editGate      = 'yield_curve_detail_edit';
-                $deleteGate    = 'yield_curve_detail_delete';
-                $crudRoutePart = 'yield-curve-details';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->addColumn('yield_curve_version_name', function ($row) {
-                return $row->yield_curve ? $row->yield_curve->version_name : '';
-            });
-
-            $table->editColumn('tenor_year', function ($row) {
-                return $row->tenor_year ? $row->tenor_year : '';
-            });
-            $table->editColumn('today', function ($row) {
-                return $row->today ? $row->today : '';
-            });
-            $table->editColumn('change_bps', function ($row) {
-                return $row->change_bps ? $row->change_bps : '';
-            });
-            $table->editColumn('yesterday_yield', function ($row) {
-                return $row->yesterday_yield ? $row->yesterday_yield : '';
-            });
-            $table->editColumn('lastweek_yield', function ($row) {
-                return $row->lastweek_yield ? $row->lastweek_yield : '';
-            });
-            $table->editColumn('lastmonth_yield', function ($row) {
-                return $row->lastmonth_yield ? $row->lastmonth_yield : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'yield_curve']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.yieldCurveDetails.index');
+        return view('admin.yieldCurveDetails.index', compact('yieldCurveDetails'));
     }
 
     public function create()

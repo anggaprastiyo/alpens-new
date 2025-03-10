@@ -7,6 +7,10 @@
                 <a class="btn btn-success" href="{{ route('admin.depositos.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.deposito.title_singular') }}
                 </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'Deposito', 'route' => 'admin.depositos.parseCsvImport'])
             </div>
         </div>
     @endcan
@@ -17,76 +21,131 @@
                     {{ trans('cruds.deposito.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Deposito">
-                        <thead>
-                            <tr>
-                                <th width="10">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-Deposito">
+                            <thead>
+                                <tr>
+                                    <th width="10">
 
-                                </th>
-                                <th>
-                                    {{ trans('cruds.deposito.fields.asset_migration') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.deposito.fields.program') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.deposito.fields.name') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.deposito.fields.bunga') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.deposito.fields.nilai_pasar') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.deposito.fields.macaulay_duration') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.deposito.fields.modified_duration') }}
-                                </th>
-                                <th>
-                                    &nbsp;
-                                </th>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($asset_migrations as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search" strict="true">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach(App\Models\Deposito::PROGRAM_SELECT as $key => $item)
-                                            <option value="{{ $key }}">{{ $item }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.deposito.fields.asset_migration') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.deposito.fields.program') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.deposito.fields.name') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.deposito.fields.bunga') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.deposito.fields.nilai_pasar') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.deposito.fields.macaulay_duration') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.deposito.fields.modified_duration') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($asset_migrations as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search" strict="true">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach(App\Models\Deposito::PROGRAM_SELECT as $key => $item)
+                                                <option value="{{ $item }}">{{ $item }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($depositos as $key => $deposito)
+                                    <tr data-entry-id="{{ $deposito->id }}">
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            {{ $deposito->asset_migration->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ App\Models\Deposito::PROGRAM_SELECT[$deposito->program] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $deposito->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $deposito->bunga ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $deposito->nilai_pasar ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $deposito->macaulay_duration ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $deposito->modified_duration ?? '' }}
+                                        </td>
+                                        <td>
+                                            @can('deposito_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.depositos.show', $deposito->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('deposito_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('admin.depositos.edit', $deposito->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('deposito_delete')
+                                                <form action="{{ route('admin.depositos.destroy', $deposito->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -102,14 +161,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('deposito_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.depositos.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -131,29 +190,12 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.depositos.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'asset_migration_name', name: 'asset_migration.name' },
-{ data: 'program', name: 'program' },
-{ data: 'name', name: 'name' },
-{ data: 'bunga', name: 'bunga' },
-{ data: 'nilai_pasar', name: 'nilai_pasar' },
-{ data: 'macaulay_duration', name: 'macaulay_duration' },
-{ data: 'modified_duration', name: 'modified_duration' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Deposito').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Deposito:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
@@ -180,7 +222,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-});
+})
 
 </script>
 @endsection

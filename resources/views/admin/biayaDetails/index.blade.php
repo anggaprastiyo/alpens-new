@@ -21,39 +21,94 @@
                     {{ trans('cruds.biayaDetail.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-BiayaDetail">
-                        <thead>
-                            <tr>
-                                <th width="10">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-BiayaDetail">
+                            <thead>
+                                <tr>
+                                    <th width="10">
 
-                                </th>
-                                <th>
-                                    {{ trans('cruds.biayaDetail.fields.program') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.biayaDetail.fields.iuran') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.biayaDetail.fields.bop') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.biayaDetail.fields.biaya_operasional') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.biayaDetail.fields.rkap_iuran') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.biayaDetail.fields.rkap_bop') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.biayaDetail.fields.rkap_biaya_operasional') }}
-                                </th>
-                                <th>
-                                    &nbsp;
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.biayaDetail.fields.program') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.biayaDetail.fields.iuran') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.biayaDetail.fields.bop') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.biayaDetail.fields.biaya_operasional') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.biayaDetail.fields.rkap_iuran') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.biayaDetail.fields.rkap_bop') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.biayaDetail.fields.rkap_biaya_operasional') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($biayaDetails as $key => $biayaDetail)
+                                    <tr data-entry-id="{{ $biayaDetail->id }}">
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            {{ App\Models\BiayaDetail::PROGRAM_SELECT[$biayaDetail->program] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $biayaDetail->iuran ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $biayaDetail->bop ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $biayaDetail->biaya_operasional ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $biayaDetail->rkap_iuran ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $biayaDetail->rkap_bop ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $biayaDetail->rkap_biaya_operasional ?? '' }}
+                                        </td>
+                                        <td>
+                                            @can('biaya_detail_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.biaya-details.show', $biayaDetail->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('biaya_detail_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('admin.biaya-details.edit', $biayaDetail->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('biaya_detail_delete')
+                                                <form action="{{ route('admin.biaya-details.destroy', $biayaDetail->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -69,14 +124,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('biaya_detail_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.biaya-details.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -98,35 +153,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.biaya-details.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'program', name: 'program' },
-{ data: 'iuran', name: 'iuran' },
-{ data: 'bop', name: 'bop' },
-{ data: 'biaya_operasional', name: 'biaya_operasional' },
-{ data: 'rkap_iuran', name: 'rkap_iuran' },
-{ data: 'rkap_bop', name: 'rkap_bop' },
-{ data: 'rkap_biaya_operasional', name: 'rkap_biaya_operasional' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-BiayaDetail').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-BiayaDetail:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

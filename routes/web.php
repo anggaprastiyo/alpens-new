@@ -87,28 +87,36 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Saham
     Route::delete('sahams/destroy', 'SahamController@massDestroy')->name('sahams.massDestroy');
+    Route::post('sahams/parse-csv-import', 'SahamController@parseCsvImport')->name('sahams.parseCsvImport');
+    Route::post('sahams/process-csv-import', 'SahamController@processCsvImport')->name('sahams.processCsvImport');
     Route::resource('sahams', 'SahamController');
 
     // Deposito
     Route::delete('depositos/destroy', 'DepositoController@massDestroy')->name('depositos.massDestroy');
+    Route::post('depositos/parse-csv-import', 'DepositoController@parseCsvImport')->name('depositos.parseCsvImport');
+    Route::post('depositos/process-csv-import', 'DepositoController@processCsvImport')->name('depositos.processCsvImport');
     Route::resource('depositos', 'DepositoController');
 
     // Reksadana
     Route::delete('reksadanas/destroy', 'ReksadanaController@massDestroy')->name('reksadanas.massDestroy');
+    Route::post('reksadanas/parse-csv-import', 'ReksadanaController@parseCsvImport')->name('reksadanas.parseCsvImport');
+    Route::post('reksadanas/process-csv-import', 'ReksadanaController@processCsvImport')->name('reksadanas.processCsvImport');
     Route::resource('reksadanas', 'ReksadanaController');
 
     // Rdpt
     Route::delete('rdpts/destroy', 'RdptController@massDestroy')->name('rdpts.massDestroy');
+    Route::post('rdpts/parse-csv-import', 'RdptController@parseCsvImport')->name('rdpts.parseCsvImport');
+    Route::post('rdpts/process-csv-import', 'RdptController@processCsvImport')->name('rdpts.processCsvImport');
     Route::resource('rdpts', 'RdptController');
 
     // Investasi Langsung
     Route::delete('investasi-langsungs/destroy', 'InvestasiLangsungController@massDestroy')->name('investasi-langsungs.massDestroy');
+    Route::post('investasi-langsungs/parse-csv-import', 'InvestasiLangsungController@parseCsvImport')->name('investasi-langsungs.parseCsvImport');
+    Route::post('investasi-langsungs/process-csv-import', 'InvestasiLangsungController@processCsvImport')->name('investasi-langsungs.processCsvImport');
     Route::resource('investasi-langsungs', 'InvestasiLangsungController');
 
     // Liability Portofolio
     Route::delete('liability-portofolios/destroy', 'LiabilityPortofolioController@massDestroy')->name('liability-portofolios.massDestroy');
-    Route::post('liability-portofolios/parse-csv-import', 'LiabilityPortofolioController@parseCsvImport')->name('liability-portofolios.parseCsvImport');
-    Route::post('liability-portofolios/process-csv-import', 'LiabilityPortofolioController@processCsvImport')->name('liability-portofolios.processCsvImport');
     Route::resource('liability-portofolios', 'LiabilityPortofolioController');
 
     // Liability Jkk

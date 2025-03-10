@@ -12,151 +12,18 @@ use App\Models\LiabilityTht;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class LiabilityThtController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('liability_tht_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = LiabilityTht::with(['liability_portofolio'])->select(sprintf('%s.*', (new LiabilityTht)->table));
-            $table = Datatables::of($query);
+        $liabilityThts = LiabilityTht::with(['liability_portofolio'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'liability_tht_show';
-                $editGate      = 'liability_tht_edit';
-                $deleteGate    = 'liability_tht_delete';
-                $crudRoutePart = 'liability-thts';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->addColumn('liability_portofolio_name', function ($row) {
-                return $row->liability_portofolio ? $row->liability_portofolio->name : '';
-            });
-
-            $table->editColumn('skenario', function ($row) {
-                return $row->skenario ? $row->skenario : '';
-            });
-            $table->editColumn('tahun', function ($row) {
-                return $row->tahun ? $row->tahun : '';
-            });
-            $table->editColumn('kps_jumlah_pns_baru', function ($row) {
-                return $row->kps_jumlah_pns_baru ? $row->kps_jumlah_pns_baru : '';
-            });
-            $table->editColumn('kps_jumlah_peserta_aktif', function ($row) {
-                return $row->kps_jumlah_peserta_aktif ? $row->kps_jumlah_peserta_aktif : '';
-            });
-            $table->editColumn('pensiun_iuran', function ($row) {
-                return $row->pensiun_iuran ? $row->pensiun_iuran : '';
-            });
-            $table->editColumn('pensiun_manfaat', function ($row) {
-                return $row->pensiun_manfaat ? $row->pensiun_manfaat : '';
-            });
-            $table->editColumn('tht_iuran_tht', function ($row) {
-                return $row->tht_iuran_tht ? $row->tht_iuran_tht : '';
-            });
-            $table->editColumn('tht_iuran_si', function ($row) {
-                return $row->tht_iuran_si ? $row->tht_iuran_si : '';
-            });
-            $table->editColumn('dwiguna_jumlah_klaim_pensiun', function ($row) {
-                return $row->dwiguna_jumlah_klaim_pensiun ? $row->dwiguna_jumlah_klaim_pensiun : '';
-            });
-            $table->editColumn('dwiguna_jumlah_klaim_meninggal', function ($row) {
-                return $row->dwiguna_jumlah_klaim_meninggal ? $row->dwiguna_jumlah_klaim_meninggal : '';
-            });
-            $table->editColumn('dwiguna_jumlah_klaim_keluar', function ($row) {
-                return $row->dwiguna_jumlah_klaim_keluar ? $row->dwiguna_jumlah_klaim_keluar : '';
-            });
-            $table->editColumn('dwiguna_jumlah_pembayaran_pensiun', function ($row) {
-                return $row->dwiguna_jumlah_pembayaran_pensiun ? $row->dwiguna_jumlah_pembayaran_pensiun : '';
-            });
-            $table->editColumn('dwiguna_jumlah_pembayaran_meninggal', function ($row) {
-                return $row->dwiguna_jumlah_pembayaran_meninggal ? $row->dwiguna_jumlah_pembayaran_meninggal : '';
-            });
-            $table->editColumn('dwiguna_jumlah_pembayaran_keluar', function ($row) {
-                return $row->dwiguna_jumlah_pembayaran_keluar ? $row->dwiguna_jumlah_pembayaran_keluar : '';
-            });
-            $table->editColumn('dwiguna_si_hp_pensiun', function ($row) {
-                return $row->dwiguna_si_hp_pensiun ? $row->dwiguna_si_hp_pensiun : '';
-            });
-            $table->editColumn('dwiguna_si_hp_meninggal', function ($row) {
-                return $row->dwiguna_si_hp_meninggal ? $row->dwiguna_si_hp_meninggal : '';
-            });
-            $table->editColumn('dwiguna_si_hp_keluar', function ($row) {
-                return $row->dwiguna_si_hp_keluar ? $row->dwiguna_si_hp_keluar : '';
-            });
-            $table->editColumn('askem_aktif_jumlah_klaim_pensiun', function ($row) {
-                return $row->askem_aktif_jumlah_klaim_pensiun ? $row->askem_aktif_jumlah_klaim_pensiun : '';
-            });
-            $table->editColumn('askem_aktif_jumlah_klaim_meninggal', function ($row) {
-                return $row->askem_aktif_jumlah_klaim_meninggal ? $row->askem_aktif_jumlah_klaim_meninggal : '';
-            });
-            $table->editColumn('askem_aktif_jumlah_klaim_keluar', function ($row) {
-                return $row->askem_aktif_jumlah_klaim_keluar ? $row->askem_aktif_jumlah_klaim_keluar : '';
-            });
-            $table->editColumn('askem_aktif_jumlah_pembayaran_pensiun', function ($row) {
-                return $row->askem_aktif_jumlah_pembayaran_pensiun ? $row->askem_aktif_jumlah_pembayaran_pensiun : '';
-            });
-            $table->editColumn('askem_aktif_jumlah_pembayaran_meninggal', function ($row) {
-                return $row->askem_aktif_jumlah_pembayaran_meninggal ? $row->askem_aktif_jumlah_pembayaran_meninggal : '';
-            });
-            $table->editColumn('askem_aktif_jumlah_pembayaran_keluar', function ($row) {
-                return $row->askem_aktif_jumlah_pembayaran_keluar ? $row->askem_aktif_jumlah_pembayaran_keluar : '';
-            });
-            $table->editColumn('askem_pensiun_jumlah_klaim_pensiun', function ($row) {
-                return $row->askem_pensiun_jumlah_klaim_pensiun ? $row->askem_pensiun_jumlah_klaim_pensiun : '';
-            });
-            $table->editColumn('askem_pensiun_jumlah_klaim_meninggal', function ($row) {
-                return $row->askem_pensiun_jumlah_klaim_meninggal ? $row->askem_pensiun_jumlah_klaim_meninggal : '';
-            });
-            $table->editColumn('askem_pensiun_jumlah_klaim_keluar', function ($row) {
-                return $row->askem_pensiun_jumlah_klaim_keluar ? $row->askem_pensiun_jumlah_klaim_keluar : '';
-            });
-            $table->editColumn('askem_pensiun_jumlah_pembayaran_pensiun', function ($row) {
-                return $row->askem_pensiun_jumlah_pembayaran_pensiun ? $row->askem_pensiun_jumlah_pembayaran_pensiun : '';
-            });
-            $table->editColumn('askem_pensiun_jumlah_pembayaran_meninggal', function ($row) {
-                return $row->askem_pensiun_jumlah_pembayaran_meninggal ? $row->askem_pensiun_jumlah_pembayaran_meninggal : '';
-            });
-            $table->editColumn('askem_pensiun_jumlah_pembayaran_keluar', function ($row) {
-                return $row->askem_pensiun_jumlah_pembayaran_keluar ? $row->askem_pensiun_jumlah_pembayaran_keluar : '';
-            });
-            $table->editColumn('total_manfaat', function ($row) {
-                return $row->total_manfaat ? $row->total_manfaat : '';
-            });
-            $table->editColumn('kmpmd_asuransi_dwiguna', function ($row) {
-                return $row->kmpmd_asuransi_dwiguna ? $row->kmpmd_asuransi_dwiguna : '';
-            });
-            $table->editColumn('kmpmd_asuransi_kematian', function ($row) {
-                return $row->kmpmd_asuransi_kematian ? $row->kmpmd_asuransi_kematian : '';
-            });
-            $table->editColumn('kenaikan_kmpmd', function ($row) {
-                return $row->kenaikan_kmpmd ? $row->kenaikan_kmpmd : '';
-            });
-            $table->editColumn('liabilitas', function ($row) {
-                return $row->liabilitas ? $row->liabilitas : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'liability_portofolio']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.liabilityThts.index');
+        return view('admin.liabilityThts.index', compact('liabilityThts'));
     }
 
     public function create()

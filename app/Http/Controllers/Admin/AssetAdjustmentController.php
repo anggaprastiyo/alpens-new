@@ -11,66 +11,18 @@ use App\Models\AssetAdjustment;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AssetAdjustmentController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('asset_adjustment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = AssetAdjustment::query()->select(sprintf('%s.*', (new AssetAdjustment)->table));
-            $table = Datatables::of($query);
+        $assetAdjustments = AssetAdjustment::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'asset_adjustment_show';
-                $editGate      = 'asset_adjustment_edit';
-                $deleteGate    = 'asset_adjustment_delete';
-                $crudRoutePart = 'asset-adjustments';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('tipe_asset', function ($row) {
-                return $row->tipe_asset ? $row->tipe_asset : '';
-            });
-            $table->editColumn('program', function ($row) {
-                return $row->program ? $row->program : '';
-            });
-            $table->editColumn('level_1', function ($row) {
-                return $row->level_1 ? $row->level_1 : '';
-            });
-            $table->editColumn('level_2', function ($row) {
-                return $row->level_2 ? $row->level_2 : '';
-            });
-            $table->editColumn('level_3', function ($row) {
-                return $row->level_3 ? $row->level_3 : '';
-            });
-            $table->editColumn('ticker', function ($row) {
-                return $row->ticker ? $row->ticker : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.assetAdjustments.index');
+        return view('admin.assetAdjustments.index', compact('assetAdjustments'));
     }
 
     public function create()

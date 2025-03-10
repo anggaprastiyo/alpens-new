@@ -21,39 +21,94 @@
                     {{ trans('cruds.generalAssumption.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-GeneralAssumption">
-                        <thead>
-                            <tr>
-                                <th width="10">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-GeneralAssumption">
+                            <thead>
+                                <tr>
+                                    <th width="10">
 
-                                </th>
-                                <th>
-                                    {{ trans('cruds.generalAssumption.fields.version_name') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.generalAssumption.fields.tahun_awal_proyeksi') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.generalAssumption.fields.tahun_akhir_proyeksi') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.generalAssumption.fields.pajak_atas_kupon_obligasi') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.generalAssumption.fields.pajak_atas_bunga_deposito') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.generalAssumption.fields.kenaikan_bop_pertahun') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.generalAssumption.fields.market_cap_saham') }}
-                                </th>
-                                <th>
-                                    &nbsp;
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.generalAssumption.fields.version_name') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.generalAssumption.fields.tahun_awal_proyeksi') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.generalAssumption.fields.tahun_akhir_proyeksi') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.generalAssumption.fields.pajak_atas_kupon_obligasi') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.generalAssumption.fields.pajak_atas_bunga_deposito') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.generalAssumption.fields.kenaikan_bop_pertahun') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.generalAssumption.fields.market_cap_saham') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($generalAssumptions as $key => $generalAssumption)
+                                    <tr data-entry-id="{{ $generalAssumption->id }}">
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            {{ $generalAssumption->version_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $generalAssumption->tahun_awal_proyeksi ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $generalAssumption->tahun_akhir_proyeksi ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $generalAssumption->pajak_atas_kupon_obligasi ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $generalAssumption->pajak_atas_bunga_deposito ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $generalAssumption->kenaikan_bop_pertahun ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $generalAssumption->market_cap_saham ?? '' }}
+                                        </td>
+                                        <td>
+                                            @can('general_assumption_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.general-assumptions.show', $generalAssumption->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('general_assumption_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('admin.general-assumptions.edit', $generalAssumption->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('general_assumption_delete')
+                                                <form action="{{ route('admin.general-assumptions.destroy', $generalAssumption->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -69,14 +124,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('general_assumption_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.general-assumptions.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -98,35 +153,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.general-assumptions.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'version_name', name: 'version_name' },
-{ data: 'tahun_awal_proyeksi', name: 'tahun_awal_proyeksi' },
-{ data: 'tahun_akhir_proyeksi', name: 'tahun_akhir_proyeksi' },
-{ data: 'pajak_atas_kupon_obligasi', name: 'pajak_atas_kupon_obligasi' },
-{ data: 'pajak_atas_bunga_deposito', name: 'pajak_atas_bunga_deposito' },
-{ data: 'kenaikan_bop_pertahun', name: 'kenaikan_bop_pertahun' },
-{ data: 'market_cap_saham', name: 'market_cap_saham' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-GeneralAssumption').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-GeneralAssumption:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

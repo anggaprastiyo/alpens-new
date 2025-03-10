@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyRdptRequest;
 use App\Http\Requests\StoreRdptRequest;
 use App\Http\Requests\UpdateRdptRequest;
@@ -11,70 +12,20 @@ use App\Models\Rdpt;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class RdptController extends Controller
 {
-    public function index(Request $request)
+    use CsvImportTrait;
+
+    public function index()
     {
         abort_if(Gate::denies('rdpt_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Rdpt::with(['asset_migration'])->select(sprintf('%s.*', (new Rdpt)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'rdpt_show';
-                $editGate      = 'rdpt_edit';
-                $deleteGate    = 'rdpt_delete';
-                $crudRoutePart = 'rdpts';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->addColumn('asset_migration_name', function ($row) {
-                return $row->asset_migration ? $row->asset_migration->name : '';
-            });
-
-            $table->editColumn('program', function ($row) {
-                return $row->program ? Rdpt::PROGRAM_SELECT[$row->program] : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('nilai_nominal', function ($row) {
-                return $row->nilai_nominal ? $row->nilai_nominal : '';
-            });
-            $table->editColumn('unit_penyertaan', function ($row) {
-                return $row->unit_penyertaan ? $row->unit_penyertaan : '';
-            });
-            $table->editColumn('nab', function ($row) {
-                return $row->nab ? $row->nab : '';
-            });
-            $table->editColumn('macaulay_duration', function ($row) {
-                return $row->macaulay_duration ? $row->macaulay_duration : '';
-            });
-            $table->editColumn('modified_duration', function ($row) {
-                return $row->modified_duration ? $row->modified_duration : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'asset_migration']);
-
-            return $table->make(true);
-        }
+        $rdpts = Rdpt::with(['asset_migration'])->get();
 
         $asset_migrations = AssetMigration::get();
 
-        return view('admin.rdpts.index', compact('asset_migrations'));
+        return view('admin.rdpts.index', compact('asset_migrations', 'rdpts'));
     }
 
     public function create()

@@ -11,66 +11,18 @@ use App\Models\GeneralAssumption;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class GeneralAssumptionController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('general_assumption_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = GeneralAssumption::query()->select(sprintf('%s.*', (new GeneralAssumption)->table));
-            $table = Datatables::of($query);
+        $generalAssumptions = GeneralAssumption::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'general_assumption_show';
-                $editGate      = 'general_assumption_edit';
-                $deleteGate    = 'general_assumption_delete';
-                $crudRoutePart = 'general-assumptions';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('version_name', function ($row) {
-                return $row->version_name ? $row->version_name : '';
-            });
-            $table->editColumn('tahun_awal_proyeksi', function ($row) {
-                return $row->tahun_awal_proyeksi ? $row->tahun_awal_proyeksi : '';
-            });
-            $table->editColumn('tahun_akhir_proyeksi', function ($row) {
-                return $row->tahun_akhir_proyeksi ? $row->tahun_akhir_proyeksi : '';
-            });
-            $table->editColumn('pajak_atas_kupon_obligasi', function ($row) {
-                return $row->pajak_atas_kupon_obligasi ? $row->pajak_atas_kupon_obligasi : '';
-            });
-            $table->editColumn('pajak_atas_bunga_deposito', function ($row) {
-                return $row->pajak_atas_bunga_deposito ? $row->pajak_atas_bunga_deposito : '';
-            });
-            $table->editColumn('kenaikan_bop_pertahun', function ($row) {
-                return $row->kenaikan_bop_pertahun ? $row->kenaikan_bop_pertahun : '';
-            });
-            $table->editColumn('market_cap_saham', function ($row) {
-                return $row->market_cap_saham ? $row->market_cap_saham : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.generalAssumptions.index');
+        return view('admin.generalAssumptions.index', compact('generalAssumptions'));
     }
 
     public function create()

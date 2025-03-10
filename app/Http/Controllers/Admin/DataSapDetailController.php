@@ -12,58 +12,18 @@ use App\Models\DataSapDetail;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class DataSapDetailController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('data_sap_detail_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = DataSapDetail::with(['data_sap'])->select(sprintf('%s.*', (new DataSapDetail)->table));
-            $table = Datatables::of($query);
+        $dataSapDetails = DataSapDetail::with(['data_sap'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'data_sap_detail_show';
-                $editGate      = 'data_sap_detail_edit';
-                $deleteGate    = 'data_sap_detail_delete';
-                $crudRoutePart = 'data-sap-details';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->addColumn('data_sap_name', function ($row) {
-                return $row->data_sap ? $row->data_sap->name : '';
-            });
-
-            $table->editColumn('jenis_program', function ($row) {
-                return $row->jenis_program ? $row->jenis_program : '';
-            });
-            $table->editColumn('item', function ($row) {
-                return $row->item ? $row->item : '';
-            });
-            $table->editColumn('nominal', function ($row) {
-                return $row->nominal ? $row->nominal : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'data_sap']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.dataSapDetails.index');
+        return view('admin.dataSapDetails.index', compact('dataSapDetails'));
     }
 
     public function create()

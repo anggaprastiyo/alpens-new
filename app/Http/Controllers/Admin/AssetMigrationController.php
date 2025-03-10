@@ -11,61 +11,16 @@ use App\Models\YieldCurve;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AssetMigrationController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('asset_migration_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = AssetMigration::with(['yield_curve'])->select(sprintf('%s.*', (new AssetMigration)->table));
-            $table = Datatables::of($query);
+        $assetMigrations = AssetMigration::with(['yield_curve'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'asset_migration_show';
-                $editGate      = 'asset_migration_edit';
-                $deleteGate    = 'asset_migration_delete';
-                $crudRoutePart = 'asset-migrations';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->addColumn('yield_curve_version_name', function ($row) {
-                return $row->yield_curve ? $row->yield_curve->version_name : '';
-            });
-
-            $table->editColumn('jumlah_tahun', function ($row) {
-                return $row->jumlah_tahun ? $row->jumlah_tahun : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('type', function ($row) {
-                return $row->type ? AssetMigration::TYPE_SELECT[$row->type] : '';
-            });
-            $table->editColumn('version', function ($row) {
-                return $row->version ? $row->version : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'yield_curve']);
-
-            return $table->make(true);
-        }
-
-        $yield_curves = YieldCurve::get();
-
-        return view('admin.assetMigrations.index', compact('yield_curves'));
+        return view('admin.assetMigrations.index', compact('assetMigrations'));
     }
 
     public function create()
