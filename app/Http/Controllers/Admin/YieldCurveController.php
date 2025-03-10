@@ -30,9 +30,9 @@ class YieldCurveController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'yield_curve_show';
-                $editGate = 'yield_curve_edit';
-                $deleteGate = 'yield_curve_delete';
+                $viewGate      = 'yield_curve_show';
+                $editGate      = 'yield_curve_edit';
+                $deleteGate    = 'yield_curve_delete';
                 $crudRoutePart = 'yield-curves';
 
                 return view('partials.datatablesActions', compact(
@@ -44,9 +44,6 @@ class YieldCurveController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('version_name', function ($row) {
                 return $row->version_name ? $row->version_name : '';
             });
@@ -77,33 +74,29 @@ class YieldCurveController extends Controller
         return redirect()->route('admin.yield-curves.index');
     }
 
-    public function edit($id)
+    public function edit(YieldCurve $yieldCurve)
     {
-        $yieldCurve = YieldCurve::find($id);
         abort_if(Gate::denies('yield_curve_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.yieldCurves.edit', compact('yieldCurve'));
     }
 
-    public function update(UpdateYieldCurveRequest $request, $id)
+    public function update(UpdateYieldCurveRequest $request, YieldCurve $yieldCurve)
     {
-        $yieldCurve = YieldCurve::find($id);
         $yieldCurve->update($request->all());
 
         return redirect()->route('admin.yield-curves.index');
     }
 
-    public function show($id)
+    public function show(YieldCurve $yieldCurve)
     {
-        $yieldCurve = YieldCurve::find($id);
         abort_if(Gate::denies('yield_curve_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.yieldCurves.show', compact('yieldCurve'));
     }
 
-    public function destroy($id)
+    public function destroy(YieldCurve $yieldCurve)
     {
-        $yieldCurve = YieldCurve::find($id);
         abort_if(Gate::denies('yield_curve_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $yieldCurve->delete();
@@ -126,10 +119,10 @@ class YieldCurveController extends Controller
     {
         abort_if(Gate::denies('yield_curve_create') && Gate::denies('yield_curve_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model = new YieldCurve;
-        $model->id = $request->input('crud_id', 0);
+        $model         = new YieldCurve();
+        $model->id     = $request->input('crud_id', 0);
         $model->exists = true;
-        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
