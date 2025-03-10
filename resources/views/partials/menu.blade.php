@@ -153,6 +153,50 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('yield_curve_detail_access')
+                            <li class="{{ request()->is("admin/yield-curve-details") || request()->is("admin/yield-curve-details/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.yield-curve-details.index") }}">
+                                    <i class="fa-fw far fa-circle">
+
+                                    </i>
+                                    <span>{{ trans('cruds.yieldCurveDetail.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('biaya_detail_access')
+                            <li class="{{ request()->is("admin/biaya-details") || request()->is("admin/biaya-details/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.biaya-details.index") }}">
+                                    <i class="fa-fw far fa-circle">
+
+                                    </i>
+                                    <span>{{ trans('cruds.biayaDetail.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('bop_detail_access')
+                            <li class="{{ request()->is("admin/bop-details") || request()->is("admin/bop-details/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.bop-details.index") }}">
+                                    <i class="fa-fw far fa-circle">
+
+                                    </i>
+                                    <span>{{ trans('cruds.bopDetail.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('data_sap_detail_access')
+                            <li class="{{ request()->is("admin/data-sap-details") || request()->is("admin/data-sap-details/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.data-sap-details.index") }}">
+                                    <i class="fa-fw far fa-circle">
+
+                                    </i>
+                                    <span>{{ trans('cruds.dataSapDetail.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan
@@ -312,50 +356,6 @@
                             </li>
                         @endcan
                     </ul>
-                </li>
-            @endcan
-            @can('yield_curve_detail_access')
-                <li class="{{ request()->is("admin/yield-curve-details") || request()->is("admin/yield-curve-details/*") ? "active" : "" }}">
-                    <a href="{{ route("admin.yield-curve-details.index") }}">
-                        <i class="fa-fw far fa-circle">
-
-                        </i>
-                        <span>{{ trans('cruds.yieldCurveDetail.title') }}</span>
-
-                    </a>
-                </li>
-            @endcan
-            @can('biaya_detail_access')
-                <li class="{{ request()->is("admin/biaya-details") || request()->is("admin/biaya-details/*") ? "active" : "" }}">
-                    <a href="{{ route("admin.biaya-details.index") }}">
-                        <i class="fa-fw far fa-circle">
-
-                        </i>
-                        <span>{{ trans('cruds.biayaDetail.title') }}</span>
-
-                    </a>
-                </li>
-            @endcan
-            @can('bop_detail_access')
-                <li class="{{ request()->is("admin/bop-details") || request()->is("admin/bop-details/*") ? "active" : "" }}">
-                    <a href="{{ route("admin.bop-details.index") }}">
-                        <i class="fa-fw far fa-circle">
-
-                        </i>
-                        <span>{{ trans('cruds.bopDetail.title') }}</span>
-
-                    </a>
-                </li>
-            @endcan
-            @can('data_sap_detail_access')
-                <li class="{{ request()->is("admin/data-sap-details") || request()->is("admin/data-sap-details/*") ? "active" : "" }}">
-                    <a href="{{ route("admin.data-sap-details.index") }}">
-                        <i class="fa-fw far fa-circle">
-
-                        </i>
-                        <span>{{ trans('cruds.dataSapDetail.title') }}</span>
-
-                    </a>
                 </li>
             @endcan
             @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
