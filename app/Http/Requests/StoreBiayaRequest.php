@@ -25,9 +25,6 @@ class StoreBiayaRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'source_file' => [
-                'required',
-            ],
         ];
     }
 }

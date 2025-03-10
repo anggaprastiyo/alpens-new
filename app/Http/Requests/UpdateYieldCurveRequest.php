@@ -21,9 +21,6 @@ class UpdateYieldCurveRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'source_file' => [
-                'required',
-            ],
         ];
     }
 }

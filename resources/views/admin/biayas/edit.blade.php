@@ -29,7 +29,7 @@
                             <span class="help-block">{{ trans('cruds.biaya.fields.name_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('source_file') ? 'has-error' : '' }}">
-                            <label class="required" for="source_file">{{ trans('cruds.biaya.fields.source_file') }}</label>
+                            <label for="source_file">{{ trans('cruds.biaya.fields.source_file') }}</label>
                             <div class="needsclick dropzone" id="source_file-dropzone">
                             </div>
                             @if($errors->has('source_file'))

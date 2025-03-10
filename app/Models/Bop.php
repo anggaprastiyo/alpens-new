@@ -16,6 +16,10 @@ class Bop extends Model implements HasMedia
 
     public $table = 'bops';
 
+    protected $appends = [
+        'source_file',
+    ];
+
     protected $dates = [
         'created_at',
         'updated_at',
@@ -39,5 +43,10 @@ class Bop extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
+    public function getSourceFileAttribute()
+    {
+        return $this->getMedia('source_file')->last();
     }
 }

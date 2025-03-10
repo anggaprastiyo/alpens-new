@@ -17,6 +17,10 @@ class DataSap extends Model implements HasMedia
 
     public $table = 'data_saps';
 
+    protected $appends = [
+        'source_file',
+    ];
+
     protected $dates = [
         'report_date',
         'created_at',
@@ -52,5 +56,10 @@ class DataSap extends Model implements HasMedia
     public function setReportDateAttribute($value)
     {
         $this->attributes['report_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getSourceFileAttribute()
+    {
+        return $this->getMedia('source_file')->last();
     }
 }
