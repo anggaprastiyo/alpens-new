@@ -11,64 +11,18 @@ use App\Models\PriceHistorical;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class PriceHistoricalController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('price_historical_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = PriceHistorical::query()->select(sprintf('%s.*', (new PriceHistorical)->table));
-            $table = Datatables::of($query);
+        $priceHistoricals = PriceHistorical::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'price_historical_show';
-                $editGate      = 'price_historical_edit';
-                $deleteGate    = 'price_historical_delete';
-                $crudRoutePart = 'price-historicals';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('ticker', function ($row) {
-                return $row->ticker ? $row->ticker : '';
-            });
-            $table->editColumn('nama', function ($row) {
-                return $row->nama ? $row->nama : '';
-            });
-
-            $table->editColumn('isin', function ($row) {
-                return $row->isin ? $row->isin : '';
-            });
-            $table->editColumn('rating', function ($row) {
-                return $row->rating ? $row->rating : '';
-            });
-            $table->editColumn('fair_yield', function ($row) {
-                return $row->fair_yield ? $row->fair_yield : '';
-            });
-            $table->editColumn('fair_price', function ($row) {
-                return $row->fair_price ? $row->fair_price : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.priceHistoricals.index');
+        return view('admin.priceHistoricals.index', compact('priceHistoricals'));
     }
 
     public function create()

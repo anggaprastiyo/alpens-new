@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroySahamRequest;
 use App\Http\Requests\StoreSahamRequest;
 use App\Http\Requests\UpdateSahamRequest;
@@ -11,73 +12,20 @@ use App\Models\Saham;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class SahamController extends Controller
 {
-    public function index(Request $request)
+    use CsvImportTrait;
+
+    public function index()
     {
         abort_if(Gate::denies('saham_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Saham::with(['asset_migration'])->select(sprintf('%s.*', (new Saham)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'saham_show';
-                $editGate      = 'saham_edit';
-                $deleteGate    = 'saham_delete';
-                $crudRoutePart = 'sahams';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->addColumn('asset_migration_name', function ($row) {
-                return $row->asset_migration ? $row->asset_migration->name : '';
-            });
-
-            $table->editColumn('program', function ($row) {
-                return $row->program ? Saham::PROGRAM_SELECT[$row->program] : '';
-            });
-            $table->editColumn('ticker', function ($row) {
-                return $row->ticker ? $row->ticker : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('harga_pasar', function ($row) {
-                return $row->harga_pasar ? $row->harga_pasar : '';
-            });
-            $table->editColumn('nilai_pasar', function ($row) {
-                return $row->nilai_pasar ? $row->nilai_pasar : '';
-            });
-            $table->editColumn('lembar_saham', function ($row) {
-                return $row->lembar_saham ? $row->lembar_saham : '';
-            });
-            $table->editColumn('macaulay_duration', function ($row) {
-                return $row->macaulay_duration ? $row->macaulay_duration : '';
-            });
-            $table->editColumn('modified_duration', function ($row) {
-                return $row->modified_duration ? $row->modified_duration : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'asset_migration']);
-
-            return $table->make(true);
-        }
+        $sahams = Saham::with(['asset_migration'])->get();
 
         $asset_migrations = AssetMigration::get();
 
-        return view('admin.sahams.index', compact('asset_migrations'));
+        return view('admin.sahams.index', compact('asset_migrations', 'sahams'));
     }
 
     public function create()

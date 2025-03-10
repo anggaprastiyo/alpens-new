@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyInvestasiLangsungRequest;
 use App\Http\Requests\StoreInvestasiLangsungRequest;
 use App\Http\Requests\UpdateInvestasiLangsungRequest;
@@ -11,67 +12,20 @@ use App\Models\InvestasiLangsung;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class InvestasiLangsungController extends Controller
 {
-    public function index(Request $request)
+    use CsvImportTrait;
+
+    public function index()
     {
         abort_if(Gate::denies('investasi_langsung_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = InvestasiLangsung::with(['asset_migration'])->select(sprintf('%s.*', (new InvestasiLangsung)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'investasi_langsung_show';
-                $editGate      = 'investasi_langsung_edit';
-                $deleteGate    = 'investasi_langsung_delete';
-                $crudRoutePart = 'investasi-langsungs';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->addColumn('asset_migration_name', function ($row) {
-                return $row->asset_migration ? $row->asset_migration->name : '';
-            });
-
-            $table->editColumn('program', function ($row) {
-                return $row->program ? InvestasiLangsung::PROGRAM_SELECT[$row->program] : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('nilai_pasar', function ($row) {
-                return $row->nilai_pasar ? $row->nilai_pasar : '';
-            });
-            $table->editColumn('nilai_investasi', function ($row) {
-                return $row->nilai_investasi ? $row->nilai_investasi : '';
-            });
-            $table->editColumn('modified_duration', function ($row) {
-                return $row->modified_duration ? $row->modified_duration : '';
-            });
-            $table->editColumn('macaulay_duration', function ($row) {
-                return $row->macaulay_duration ? $row->macaulay_duration : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'asset_migration']);
-
-            return $table->make(true);
-        }
+        $investasiLangsungs = InvestasiLangsung::with(['asset_migration'])->get();
 
         $asset_migrations = AssetMigration::get();
 
-        return view('admin.investasiLangsungs.index', compact('asset_migrations'));
+        return view('admin.investasiLangsungs.index', compact('asset_migrations', 'investasiLangsungs'));
     }
 
     public function create()

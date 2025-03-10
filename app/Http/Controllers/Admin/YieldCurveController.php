@@ -12,48 +12,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class YieldCurveController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('yield_curve_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = YieldCurve::query()->select(sprintf('%s.*', (new YieldCurve)->table));
-            $table = Datatables::of($query);
+        $yieldCurves = YieldCurve::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'yield_curve_show';
-                $editGate      = 'yield_curve_edit';
-                $deleteGate    = 'yield_curve_delete';
-                $crudRoutePart = 'yield-curves';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('version_name', function ($row) {
-                return $row->version_name ? $row->version_name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.yieldCurves.index');
+        return view('admin.yieldCurves.index', compact('yieldCurves'));
     }
 
     public function create()

@@ -21,65 +21,94 @@
                     {{ trans('cruds.priceHistorical.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PriceHistorical">
-                        <thead>
-                            <tr>
-                                <th width="10">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-PriceHistorical">
+                            <thead>
+                                <tr>
+                                    <th width="10">
 
-                                </th>
-                                <th>
-                                    {{ trans('cruds.priceHistorical.fields.ticker') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.priceHistorical.fields.nama') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.priceHistorical.fields.tanggal') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.priceHistorical.fields.isin') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.priceHistorical.fields.rating') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.priceHistorical.fields.fair_yield') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.priceHistorical.fields.fair_price') }}
-                                </th>
-                                <th>
-                                    &nbsp;
-                                </th>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                        </thead>
-                    </table>
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.priceHistorical.fields.ticker') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.priceHistorical.fields.nama') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.priceHistorical.fields.tanggal') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.priceHistorical.fields.isin') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.priceHistorical.fields.rating') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.priceHistorical.fields.fair_yield') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.priceHistorical.fields.fair_price') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($priceHistoricals as $key => $priceHistorical)
+                                    <tr data-entry-id="{{ $priceHistorical->id }}">
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            {{ $priceHistorical->ticker ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $priceHistorical->nama ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $priceHistorical->tanggal ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $priceHistorical->isin ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $priceHistorical->rating ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $priceHistorical->fair_yield ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $priceHistorical->fair_price ?? '' }}
+                                        </td>
+                                        <td>
+                                            @can('price_historical_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.price-historicals.show', $priceHistorical->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('price_historical_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('admin.price-historicals.edit', $priceHistorical->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('price_historical_delete')
+                                                <form action="{{ route('admin.price-historicals.destroy', $priceHistorical->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -95,14 +124,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('price_historical_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.price-historicals.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -124,56 +153,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.price-historicals.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'ticker', name: 'ticker' },
-{ data: 'nama', name: 'nama' },
-{ data: 'tanggal', name: 'tanggal' },
-{ data: 'isin', name: 'isin' },
-{ data: 'rating', name: 'rating' },
-{ data: 'fair_yield', name: 'fair_yield' },
-{ data: 'fair_price', name: 'fair_price' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-PriceHistorical').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-PriceHistorical:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-let visibleColumnsIndexes = null;
-$('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-      let index = $(this).parent().index()
-      if (visibleColumnsIndexes !== null) {
-        index = visibleColumnsIndexes[index]
-      }
-
-      table
-        .column(index)
-        .search(value, strict)
-        .draw()
-  });
-table.on('column-visibility.dt', function(e, settings, column, state) {
-      visibleColumnsIndexes = []
-      table.columns(":visible").every(function(colIdx) {
-          visibleColumnsIndexes.push(colIdx);
-      });
-  })
-});
+})
 
 </script>
 @endsection
