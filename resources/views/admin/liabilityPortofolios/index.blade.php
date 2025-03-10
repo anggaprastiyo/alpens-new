@@ -53,7 +53,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($biayas as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->nama }}">{{ $item->nama }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -131,7 +131,7 @@
     ajax: "{{ route('admin.liability-portofolios.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'biaya_name', name: 'biaya.name' },
+{ data: 'biaya_nama', name: 'biaya.nama' },
 { data: 'yield_curve_version_name', name: 'yield_curve.version_name' },
 { data: 'name', name: 'name' },
 { data: 'description', name: 'description' },

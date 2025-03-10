@@ -10,8 +10,8 @@ class CreateBiayasTable extends Migration
     {
         Schema::create('biayas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nama');
             $table->date('tanggal');
-            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });

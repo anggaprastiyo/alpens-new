@@ -31,7 +31,7 @@
                                     {{ trans('cruds.priceHistorical.fields.ticker') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.priceHistorical.fields.name') }}
+                                    {{ trans('cruds.priceHistorical.fields.nama') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.priceHistorical.fields.tanggal') }}
@@ -134,7 +134,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'ticker', name: 'ticker' },
-{ data: 'name', name: 'name' },
+{ data: 'nama', name: 'nama' },
 { data: 'tanggal', name: 'tanggal' },
 { data: 'isin', name: 'isin' },
 { data: 'rating', name: 'rating' },

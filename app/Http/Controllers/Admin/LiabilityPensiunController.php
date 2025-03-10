@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyLiabilityPensiunRequest;
 use App\Http\Requests\StoreLiabilityPensiunRequest;
 use App\Http\Requests\UpdateLiabilityPensiunRequest;
@@ -11,16 +12,67 @@ use App\Models\LiabilityPortofolio;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class LiabilityPensiunController extends Controller
 {
-    public function index()
+    use CsvImportTrait;
+
+    public function index(Request $request)
     {
         abort_if(Gate::denies('liability_pensiun_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $liabilityPensiuns = LiabilityPensiun::with(['liability_portofolio'])->get();
+        if ($request->ajax()) {
+            $query = LiabilityPensiun::with(['liability_portofolio'])->select(sprintf('%s.*', (new LiabilityPensiun)->table));
+            $table = Datatables::of($query);
 
-        return view('admin.liabilityPensiuns.index', compact('liabilityPensiuns'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'liability_pensiun_show';
+                $editGate      = 'liability_pensiun_edit';
+                $deleteGate    = 'liability_pensiun_delete';
+                $crudRoutePart = 'liability-pensiuns';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->addColumn('liability_portofolio_name', function ($row) {
+                return $row->liability_portofolio ? $row->liability_portofolio->name : '';
+            });
+
+            $table->editColumn('skenario', function ($row) {
+                return $row->skenario ? $row->skenario : '';
+            });
+            $table->editColumn('tahun', function ($row) {
+                return $row->tahun ? $row->tahun : '';
+            });
+            $table->editColumn('peserta_pensiun', function ($row) {
+                return $row->peserta_pensiun ? $row->peserta_pensiun : '';
+            });
+            $table->editColumn('iuran', function ($row) {
+                return $row->iuran ? $row->iuran : '';
+            });
+            $table->editColumn('spppip', function ($row) {
+                return $row->spppip ? $row->spppip : '';
+            });
+            $table->editColumn('pembayaran_manfaat', function ($row) {
+                return $row->pembayaran_manfaat ? $row->pembayaran_manfaat : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'liability_portofolio']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.liabilityPensiuns.index');
     }
 
     public function create()

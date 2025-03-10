@@ -41,18 +41,6 @@
                                         {!! $yieldCurve->description !!}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.yieldCurve.fields.source_file') }}
-                                    </th>
-                                    <td>
-                                        @if($yieldCurve->source_file)
-                                            <a href="{{ $yieldCurve->source_file->getUrl() }}" target="_blank">
-                                                {{ trans('global.view_file') }}
-                                            </a>
-                                        @endif
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

@@ -27,30 +27,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.biaya.fields.nama') }}
+                                    </th>
+                                    <td>
+                                        {{ $biaya->nama }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.biaya.fields.tanggal') }}
                                     </th>
                                     <td>
                                         {{ $biaya->tanggal }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.biaya.fields.name') }}
-                                    </th>
-                                    <td>
-                                        {{ $biaya->name }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.biaya.fields.source_file') }}
-                                    </th>
-                                    <td>
-                                        @if($biaya->source_file)
-                                            <a href="{{ $biaya->source_file->getUrl() }}" target="_blank">
-                                                {{ trans('global.view_file') }}
-                                            </a>
-                                        @endif
                                     </td>
                                 </tr>
                             </tbody>

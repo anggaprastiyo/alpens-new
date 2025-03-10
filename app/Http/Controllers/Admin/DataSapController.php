@@ -67,10 +67,6 @@ class DataSapController extends Controller
     {
         $dataSap = DataSap::create($request->all());
 
-        if ($request->input('source_file', false)) {
-            $dataSap->addMedia(storage_path('tmp/uploads/' . basename($request->input('source_file'))))->toMediaCollection('source_file');
-        }
-
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $dataSap->id]);
         }
@@ -88,17 +84,6 @@ class DataSapController extends Controller
     public function update(UpdateDataSapRequest $request, DataSap $dataSap)
     {
         $dataSap->update($request->all());
-
-        if ($request->input('source_file', false)) {
-            if (! $dataSap->source_file || $request->input('source_file') !== $dataSap->source_file->file_name) {
-                if ($dataSap->source_file) {
-                    $dataSap->source_file->delete();
-                }
-                $dataSap->addMedia(storage_path('tmp/uploads/' . basename($request->input('source_file'))))->toMediaCollection('source_file');
-            }
-        } elseif ($dataSap->source_file) {
-            $dataSap->source_file->delete();
-        }
 
         return redirect()->route('admin.data-saps.index');
     }

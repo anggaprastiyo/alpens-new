@@ -21,7 +21,7 @@ class StorePriceHistoricalRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'name' => [
+            'nama' => [
                 'string',
                 'required',
             ],

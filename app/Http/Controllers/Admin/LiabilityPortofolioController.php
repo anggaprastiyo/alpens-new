@@ -45,8 +45,8 @@ class LiabilityPortofolioController extends Controller
                 ));
             });
 
-            $table->addColumn('biaya_name', function ($row) {
-                return $row->biaya ? $row->biaya->name : '';
+            $table->addColumn('biaya_nama', function ($row) {
+                return $row->biaya ? $row->biaya->nama : '';
             });
 
             $table->addColumn('yield_curve_version_name', function ($row) {
@@ -75,7 +75,7 @@ class LiabilityPortofolioController extends Controller
     {
         abort_if(Gate::denies('liability_portofolio_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $biayas = Biaya::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $biayas = Biaya::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $yield_curves = YieldCurve::pluck('version_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -93,7 +93,7 @@ class LiabilityPortofolioController extends Controller
     {
         abort_if(Gate::denies('liability_portofolio_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $biayas = Biaya::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $biayas = Biaya::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $yield_curves = YieldCurve::pluck('version_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

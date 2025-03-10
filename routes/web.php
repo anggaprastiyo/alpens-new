@@ -45,8 +45,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Biaya
     Route::delete('biayas/destroy', 'BiayaController@massDestroy')->name('biayas.massDestroy');
-    Route::post('biayas/media', 'BiayaController@storeMedia')->name('biayas.storeMedia');
-    Route::post('biayas/ckmedia', 'BiayaController@storeCKEditorImages')->name('biayas.storeCKEditorImages');
     Route::resource('biayas', 'BiayaController');
 
     // Biaya Detail
@@ -115,14 +113,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Liability Jkk
     Route::delete('liability-jkks/destroy', 'LiabilityJkkController@massDestroy')->name('liability-jkks.massDestroy');
+    Route::post('liability-jkks/parse-csv-import', 'LiabilityJkkController@parseCsvImport')->name('liability-jkks.parseCsvImport');
+    Route::post('liability-jkks/process-csv-import', 'LiabilityJkkController@processCsvImport')->name('liability-jkks.processCsvImport');
     Route::resource('liability-jkks', 'LiabilityJkkController');
 
     // Liability Jkm
     Route::delete('liability-jkms/destroy', 'LiabilityJkmController@massDestroy')->name('liability-jkms.massDestroy');
+    Route::post('liability-jkms/parse-csv-import', 'LiabilityJkmController@parseCsvImport')->name('liability-jkms.parseCsvImport');
+    Route::post('liability-jkms/process-csv-import', 'LiabilityJkmController@processCsvImport')->name('liability-jkms.processCsvImport');
     Route::resource('liability-jkms', 'LiabilityJkmController');
 
     // Liability Pensiun
     Route::delete('liability-pensiuns/destroy', 'LiabilityPensiunController@massDestroy')->name('liability-pensiuns.massDestroy');
+    Route::post('liability-pensiuns/parse-csv-import', 'LiabilityPensiunController@parseCsvImport')->name('liability-pensiuns.parseCsvImport');
+    Route::post('liability-pensiuns/process-csv-import', 'LiabilityPensiunController@processCsvImport')->name('liability-pensiuns.processCsvImport');
     Route::resource('liability-pensiuns', 'LiabilityPensiunController');
 
     // Liability Tht

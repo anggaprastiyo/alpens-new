@@ -30,7 +30,7 @@
                                         {{ trans('cruds.liabilityPortofolio.fields.biaya') }}
                                     </th>
                                     <td>
-                                        {{ $liabilityPortofolio->biaya->name ?? '' }}
+                                        {{ $liabilityPortofolio->biaya->nama ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>

@@ -24,7 +24,7 @@ class PriceHistorical extends Model
 
     protected $fillable = [
         'ticker',
-        'name',
+        'nama',
         'tanggal',
         'isin',
         'rating',

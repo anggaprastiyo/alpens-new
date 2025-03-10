@@ -20,13 +20,13 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.priceHistorical.fields.ticker_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                            <label class="required" for="name">{{ trans('cruds.priceHistorical.fields.name') }}</label>
-                            <input class="form-control" type="text" name="name" id="name" value="{{ old('name', $priceHistorical->name) }}" required>
-                            @if($errors->has('name'))
-                                <span class="help-block" role="alert">{{ $errors->first('name') }}</span>
+                        <div class="form-group {{ $errors->has('nama') ? 'has-error' : '' }}">
+                            <label class="required" for="nama">{{ trans('cruds.priceHistorical.fields.nama') }}</label>
+                            <input class="form-control" type="text" name="nama" id="nama" value="{{ old('nama', $priceHistorical->nama) }}" required>
+                            @if($errors->has('nama'))
+                                <span class="help-block" role="alert">{{ $errors->first('nama') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.priceHistorical.fields.name_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.priceHistorical.fields.nama_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('tanggal') ? 'has-error' : '' }}">
                             <label class="required" for="tanggal">{{ trans('cruds.priceHistorical.fields.tanggal') }}</label>
