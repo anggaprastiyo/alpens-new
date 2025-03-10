@@ -24,9 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.investasiLangsung.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.investasiLangsung.fields.asset_migration') }}
                                 </th>
                                 <th>
@@ -53,9 +50,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
@@ -146,7 +140,6 @@
     ajax: "{{ route('admin.investasi-langsungs.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'asset_migration_name', name: 'asset_migration.name' },
 { data: 'program', name: 'program' },
 { data: 'name', name: 'name' },

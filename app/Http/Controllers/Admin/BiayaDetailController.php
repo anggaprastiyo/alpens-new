@@ -44,9 +44,6 @@ class BiayaDetailController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('program', function ($row) {
                 return $row->program ? BiayaDetail::PROGRAM_SELECT[$row->program] : '';
             });

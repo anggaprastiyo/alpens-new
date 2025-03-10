@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.priceHistorical.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.priceHistorical.fields.ticker') }}
                                 </th>
                                 <th>
@@ -57,9 +54,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -139,7 +133,6 @@
     ajax: "{{ route('admin.price-historicals.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'ticker', name: 'ticker' },
 { data: 'name', name: 'name' },
 { data: 'tanggal', name: 'tanggal' },

@@ -44,9 +44,6 @@ class YieldCurveDetailController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->addColumn('yield_curve_version_name', function ($row) {
                 return $row->yield_curve ? $row->yield_curve->version_name : '';
             });

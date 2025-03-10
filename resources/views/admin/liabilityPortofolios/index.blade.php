@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.liabilityPortofolio.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.liabilityPortofolio.fields.biaya') }}
                                 </th>
                                 <th>
@@ -51,9 +48,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
@@ -137,7 +131,6 @@
     ajax: "{{ route('admin.liability-portofolios.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'biaya_name', name: 'biaya.name' },
 { data: 'yield_curve_version_name', name: 'yield_curve.version_name' },
 { data: 'name', name: 'name' },

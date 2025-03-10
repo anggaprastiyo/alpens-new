@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.generalAssumption.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.generalAssumption.fields.version_name') }}
                                 </th>
                                 <th>
@@ -110,7 +107,6 @@
     ajax: "{{ route('admin.general-assumptions.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'version_name', name: 'version_name' },
 { data: 'tahun_awal_proyeksi', name: 'tahun_awal_proyeksi' },
 { data: 'tahun_akhir_proyeksi', name: 'tahun_akhir_proyeksi' },

@@ -24,9 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.biaya.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.biaya.fields.tanggal') }}
                                 </th>
                                 <th>
@@ -38,9 +35,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -105,7 +99,6 @@
     ajax: "{{ route('admin.biayas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'tanggal', name: 'tanggal' },
 { data: 'name', name: 'name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

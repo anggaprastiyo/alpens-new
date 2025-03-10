@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.dataSapDetail.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.dataSapDetail.fields.data_sap') }}
                                 </th>
                                 <th>
@@ -101,7 +98,6 @@
     ajax: "{{ route('admin.data-sap-details.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'data_sap_name', name: 'data_sap.name' },
 { data: 'jenis_program', name: 'jenis_program' },
 { data: 'item', name: 'item' },

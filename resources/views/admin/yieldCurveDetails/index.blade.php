@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.yieldCurveDetail.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.yieldCurveDetail.fields.yield_curve') }}
                                 </th>
                                 <th>
@@ -113,7 +110,6 @@
     ajax: "{{ route('admin.yield-curve-details.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'yield_curve_version_name', name: 'yield_curve.version_name' },
 { data: 'tanggal', name: 'tanggal' },
 { data: 'tenor_year', name: 'tenor_year' },

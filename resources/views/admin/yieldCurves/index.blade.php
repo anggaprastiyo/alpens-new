@@ -24,9 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.yieldCurve.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.yieldCurve.fields.version_name') }}
                                 </th>
                                 <th>
@@ -35,9 +32,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -100,7 +94,6 @@
     ajax: "{{ route('admin.yield-curves.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'version_name', name: 'version_name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

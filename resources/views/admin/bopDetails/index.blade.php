@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.bopDetail.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.bopDetail.fields.bop') }}
                                 </th>
                                 <th>
@@ -98,7 +95,6 @@
     ajax: "{{ route('admin.bop-details.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'bop_name', name: 'bop.name' },
 { data: 'tahun', name: 'tahun' },
 { data: 'nilai_bop', name: 'nilai_bop' },

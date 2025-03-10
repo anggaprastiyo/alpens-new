@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.liabilityTht.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.liabilityTht.fields.liability_portofolio') }}
                                 </th>
                                 <th>
@@ -197,7 +194,6 @@
     ajax: "{{ route('admin.liability-thts.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'liability_portofolio_name', name: 'liability_portofolio.name' },
 { data: 'report_date', name: 'report_date' },
 { data: 'skenario', name: 'skenario' },

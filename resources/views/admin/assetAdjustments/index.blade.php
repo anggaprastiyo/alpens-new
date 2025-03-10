@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.assetAdjustment.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.assetAdjustment.fields.portfolio_date') }}
                                 </th>
                                 <th>
@@ -113,7 +110,6 @@
     ajax: "{{ route('admin.asset-adjustments.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'portfolio_date', name: 'portfolio_date' },
 { data: 'tipe_asset', name: 'tipe_asset' },
 { data: 'program', name: 'program' },

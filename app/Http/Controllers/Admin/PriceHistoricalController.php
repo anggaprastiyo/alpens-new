@@ -43,9 +43,6 @@ class PriceHistoricalController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('ticker', function ($row) {
                 return $row->ticker ? $row->ticker : '';
             });

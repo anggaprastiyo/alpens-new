@@ -44,10 +44,6 @@ class DataSapController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });

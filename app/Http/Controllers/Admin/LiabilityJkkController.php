@@ -41,9 +41,6 @@ class LiabilityJkkController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->addColumn('liability_portofolio_name', function ($row) {
                 return $row->liability_portofolio ? $row->liability_portofolio->name : '';
             });

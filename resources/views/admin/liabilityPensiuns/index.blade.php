@@ -25,9 +25,6 @@
 
                                     </th>
                                     <th>
-                                        {{ trans('cruds.liabilityPensiun.fields.id') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.liabilityPensiun.fields.liability_portofolio') }}
                                     </th>
                                     <th>
@@ -61,9 +58,6 @@
                                     <tr data-entry-id="{{ $liabilityPensiun->id }}">
                                         <td>
 
-                                        </td>
-                                        <td>
-                                            {{ $liabilityPensiun->id ?? '' }}
                                         </td>
                                         <td>
                                             {{ $liabilityPensiun->liability_portofolio->name ?? '' }}
