@@ -24,6 +24,9 @@
 
                                 </th>
                                 <th>
+                                    {{ trans('cruds.yieldCurve.fields.id') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.yieldCurve.fields.version_name') }}
                                 </th>
                                 <th>
@@ -32,6 +35,9 @@
                             </tr>
                             <tr>
                                 <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -94,11 +100,12 @@
     ajax: "{{ route('admin.yield-curves.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'id', name: 'id' },
 { data: 'version_name', name: 'version_name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-YieldCurve').DataTable(dtOverrideGlobals);
