@@ -17,20 +17,25 @@ class YieldCurveDetailController extends Controller
 {
     use CsvImportTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('yield_curve_detail_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $yieldCurveId = $request->input('id');
+        $yieldCurve = YieldCurve::find($yieldCurveId);
+        $yieldCurveDetails = YieldCurveDetail::with(['yield_curve'])
+            ->where('yield_curve_id', $yieldCurveId)
+            ->get();
 
-        $yieldCurveDetails = YieldCurveDetail::with(['yield_curve'])->get();
-
-        return view('admin.yieldCurveDetails.index', compact('yieldCurveDetails'));
+        return view('admin.yieldCurveDetails.index', compact('yieldCurveDetails', 'yieldCurve'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         abort_if(Gate::denies('yield_curve_detail_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $yield_curves = YieldCurve::pluck('version_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $yieldCurveId = $request->input('id');
+        $yield_curves = YieldCurve::pluck('version_name', 'id')
+            ->where('yield_curve_id', $yieldCurveId)
+            ->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.yieldCurveDetails.create', compact('yield_curves'));
     }
@@ -38,8 +43,7 @@ class YieldCurveDetailController extends Controller
     public function store(StoreYieldCurveDetailRequest $request)
     {
         $yieldCurveDetail = YieldCurveDetail::create($request->all());
-
-        return redirect()->route('admin.yield-curve-details.index');
+        return redirect()->route('admin.yield-curve-details.index', ['id' => $request->input('yield_curve_id')]);
     }
 
     public function edit(YieldCurveDetail $yieldCurveDetail)
@@ -57,7 +61,7 @@ class YieldCurveDetailController extends Controller
     {
         $yieldCurveDetail->update($request->all());
 
-        return redirect()->route('admin.yield-curve-details.index');
+        return redirect()->route('admin.yield-curve-details.index', ['id' => $request->input('yield_curve_id')]);
     }
 
     public function show(YieldCurveDetail $yieldCurveDetail)

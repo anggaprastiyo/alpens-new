@@ -88,15 +88,12 @@
                             </li>
                         @endcan
                         @can('yield_curve_access')
-                            <li class="{{ request()->is("admin/yield-curves") || request()->is("admin/yield-curves/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.yield-curves.index") }}">
-                                    <i class="fa-fw fas fa-chart-line">
-
-                                    </i>
-                                    <span>{{ trans('cruds.yieldCurve.title') }}</span>
-
-                                </a>
-                            </li>
+                                <li class="{{ request()->is("admin/yield-curves*") || request()->is("admin/yield-curve-details*") ? "active" : "" }}">
+                                    <a href="{{ route("admin.yield-curves.index") }}">
+                                        <i class="fa-fw fas fa-chart-line"></i>
+                                        <span>{{ trans('cruds.yieldCurve.title') }}</span>
+                                    </a>
+                                </li>
                         @endcan
                         @can('biaya_access')
                             <li class="{{ request()->is("admin/biayas") || request()->is("admin/biayas/*") ? "active" : "" }}">
@@ -153,17 +150,17 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('yield_curve_detail_access')
-                            <li class="{{ request()->is("admin/yield-curve-details") || request()->is("admin/yield-curve-details/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.yield-curve-details.index") }}">
-                                    <i class="fa-fw far fa-circle">
+{{--                        @can('yield_curve_detail_access')--}}
+{{--                            <li class="{{ request()->is("admin/yield-curve-details") || request()->is("admin/yield-curve-details/*") ? "active" : "" }}">--}}
+{{--                                <a href="{{ route("admin.yield-curve-details.index") }}">--}}
+{{--                                    <i class="fa-fw far fa-circle">--}}
 
-                                    </i>
-                                    <span>{{ trans('cruds.yieldCurveDetail.title') }}</span>
+{{--                                    </i>--}}
+{{--                                    <span>{{ trans('cruds.yieldCurveDetail.title') }}</span>--}}
 
-                                </a>
-                            </li>
-                        @endcan
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endcan--}}
                         @can('biaya_detail_access')
                             <li class="{{ request()->is("admin/biaya-details") || request()->is("admin/biaya-details/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.biaya-details.index") }}">
