@@ -25,9 +25,6 @@ class UpdateBiayaRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'source_file' => [
-                'required',
-            ],
         ];
     }
 }

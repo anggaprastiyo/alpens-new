@@ -411,6 +411,8 @@ return [
             'updated_at_helper'  => ' ',
             'deleted_at'         => 'Deleted at',
             'deleted_at_helper'  => ' ',
+            'source_file'        => 'Source File',
+            'source_file_helper' => ' ',
         ],
     ],
     'bopDetail' => [
@@ -1102,8 +1104,8 @@ return [
         ],
     ],
     'dataSap' => [
-        'title'          => 'Data Sap',
-        'title_singular' => 'Data Sap',
+        'title'          => 'Data SAP',
+        'title_singular' => 'Data SAP',
         'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => ' ',
@@ -1119,6 +1121,8 @@ return [
             'updated_at_helper'  => ' ',
             'deleted_at'         => 'Deleted at',
             'deleted_at_helper'  => ' ',
+            'source_file'        => 'Source File',
+            'source_file_helper' => ' ',
         ],
     ],
     'dataSapDetail' => [
