@@ -25,8 +25,8 @@ class CreateGeneralAssumptionsTable extends Migration
             $table->float('capital_gain_saham', 5, 2);
             $table->float('capital_gain_reksadana', 5, 2);
             $table->float('capital_gain_inv_langsung', 5, 2);
-            $table->float('market_cap_saham', 5, 2);
             $table->float('capital_gain_rdpt', 5, 2);
+            $table->decimal('market_cap_saham', 15, 2);
             $table->timestamps();
             $table->softDeletes();
         });

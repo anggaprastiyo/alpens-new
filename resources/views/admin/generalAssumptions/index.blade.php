@@ -49,6 +49,9 @@
                                     {{ trans('cruds.generalAssumption.fields.kenaikan_bop_pertahun') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.generalAssumption.fields.market_cap_saham') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -114,6 +117,7 @@
 { data: 'pajak_atas_kupon_obligasi', name: 'pajak_atas_kupon_obligasi' },
 { data: 'pajak_atas_bunga_deposito', name: 'pajak_atas_bunga_deposito' },
 { data: 'kenaikan_bop_pertahun', name: 'kenaikan_bop_pertahun' },
+{ data: 'market_cap_saham', name: 'market_cap_saham' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

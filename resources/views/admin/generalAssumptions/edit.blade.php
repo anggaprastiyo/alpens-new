@@ -132,14 +132,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.generalAssumption.fields.capital_gain_inv_langsung_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('market_cap_saham') ? 'has-error' : '' }}">
-                            <label class="required" for="market_cap_saham">{{ trans('cruds.generalAssumption.fields.market_cap_saham') }}</label>
-                            <input class="form-control" type="number" name="market_cap_saham" id="market_cap_saham" value="{{ old('market_cap_saham', $generalAssumption->market_cap_saham) }}" step="0.01" required>
-                            @if($errors->has('market_cap_saham'))
-                                <span class="help-block" role="alert">{{ $errors->first('market_cap_saham') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.generalAssumption.fields.market_cap_saham_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('capital_gain_rdpt') ? 'has-error' : '' }}">
                             <label class="required" for="capital_gain_rdpt">{{ trans('cruds.generalAssumption.fields.capital_gain_rdpt') }}</label>
                             <input class="form-control" type="number" name="capital_gain_rdpt" id="capital_gain_rdpt" value="{{ old('capital_gain_rdpt', $generalAssumption->capital_gain_rdpt) }}" step="0.01" required>
@@ -147,6 +139,14 @@
                                 <span class="help-block" role="alert">{{ $errors->first('capital_gain_rdpt') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.generalAssumption.fields.capital_gain_rdpt_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('market_cap_saham') ? 'has-error' : '' }}">
+                            <label class="required" for="market_cap_saham">{{ trans('cruds.generalAssumption.fields.market_cap_saham') }}</label>
+                            <input class="form-control" type="number" name="market_cap_saham" id="market_cap_saham" value="{{ old('market_cap_saham', $generalAssumption->market_cap_saham) }}" step="0.01" required>
+                            @if($errors->has('market_cap_saham'))
+                                <span class="help-block" role="alert">{{ $errors->first('market_cap_saham') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.generalAssumption.fields.market_cap_saham_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

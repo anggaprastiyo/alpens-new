@@ -64,6 +64,9 @@ class GeneralAssumptionController extends Controller
             $table->editColumn('kenaikan_bop_pertahun', function ($row) {
                 return $row->kenaikan_bop_pertahun ? $row->kenaikan_bop_pertahun : '';
             });
+            $table->editColumn('market_cap_saham', function ($row) {
+                return $row->market_cap_saham ? $row->market_cap_saham : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder']);
 
