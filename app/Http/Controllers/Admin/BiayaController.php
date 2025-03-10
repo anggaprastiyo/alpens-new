@@ -26,9 +26,9 @@ class BiayaController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'biaya_show';
-                $editGate = 'biaya_edit';
-                $deleteGate = 'biaya_delete';
+                $viewGate      = 'biaya_show';
+                $editGate      = 'biaya_edit';
+                $deleteGate    = 'biaya_delete';
                 $crudRoutePart = 'biayas';
 
                 return view('partials.datatablesActions', compact(
@@ -82,7 +82,6 @@ class BiayaController extends Controller
 
     public function show(Biaya $biaya)
     {
-        dd($biaya);
         abort_if(Gate::denies('biaya_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.biayas.show', compact('biaya'));
