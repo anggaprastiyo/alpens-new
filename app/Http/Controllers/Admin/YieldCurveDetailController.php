@@ -32,9 +32,8 @@ class YieldCurveDetailController extends Controller
     public function create(Request $request)
     {
         abort_if(Gate::denies('yield_curve_detail_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $yieldCurveId = $request->input('id');
-        $yield_curves = YieldCurve::pluck('version_name', 'id')
-            ->where('yield_curve_id', $yieldCurveId)
+        $yield_curves = YieldCurve::where('id', '=', $request->input('id'))
+            ->pluck('version_name', 'id')
             ->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.yieldCurveDetails.create', compact('yield_curves'));
@@ -50,7 +49,9 @@ class YieldCurveDetailController extends Controller
     {
         abort_if(Gate::denies('yield_curve_detail_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $yield_curves = YieldCurve::pluck('version_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $yield_curves = YieldCurve::where('id', '=', $yieldCurveDetail->yield_curve_id)
+            ->pluck('version_name', 'id')
+            ->prepend(trans('global.pleaseSelect'), '');
 
         $yieldCurveDetail->load('yield_curve');
 
