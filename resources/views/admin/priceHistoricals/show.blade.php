@@ -35,10 +35,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.priceHistorical.fields.name') }}
+                                        {{ trans('cruds.priceHistorical.fields.nama') }}
                                     </th>
                                     <td>
-                                        {{ $priceHistorical->name }}
+                                        {{ $priceHistorical->nama }}
                                     </td>
                                 </tr>
                                 <tr>

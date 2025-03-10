@@ -67,10 +67,6 @@ class BopController extends Controller
     {
         $bop = Bop::create($request->all());
 
-        if ($request->input('source_file', false)) {
-            $bop->addMedia(storage_path('tmp/uploads/' . basename($request->input('source_file'))))->toMediaCollection('source_file');
-        }
-
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $bop->id]);
         }
@@ -88,17 +84,6 @@ class BopController extends Controller
     public function update(UpdateBopRequest $request, Bop $bop)
     {
         $bop->update($request->all());
-
-        if ($request->input('source_file', false)) {
-            if (! $bop->source_file || $request->input('source_file') !== $bop->source_file->file_name) {
-                if ($bop->source_file) {
-                    $bop->source_file->delete();
-                }
-                $bop->addMedia(storage_path('tmp/uploads/' . basename($request->input('source_file'))))->toMediaCollection('source_file');
-            }
-        } elseif ($bop->source_file) {
-            $bop->source_file->delete();
-        }
 
         return redirect()->route('admin.bops.index');
     }

@@ -78,7 +78,7 @@ class BiayaDetailController extends Controller
     {
         abort_if(Gate::denies('biaya_detail_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $biayas = Biaya::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $biayas = Biaya::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.biayaDetails.create', compact('biayas'));
     }

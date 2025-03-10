@@ -17,13 +17,13 @@ class StoreBiayaRequest extends FormRequest
     public function rules()
     {
         return [
+            'nama' => [
+                'string',
+                'required',
+            ],
             'tanggal' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
-            ],
-            'name' => [
-                'string',
-                'required',
             ],
         ];
     }

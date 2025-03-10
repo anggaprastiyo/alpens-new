@@ -11,7 +11,7 @@ class CreatePriceHistoricalsTable extends Migration
         Schema::create('price_historicals', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('ticker');
-            $table->string('name');
+            $table->string('nama');
             $table->date('tanggal');
             $table->string('isin');
             $table->string('rating');

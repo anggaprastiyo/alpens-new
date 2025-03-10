@@ -46,8 +46,8 @@ class PriceHistoricalController extends Controller
             $table->editColumn('ticker', function ($row) {
                 return $row->ticker ? $row->ticker : '';
             });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
+            $table->editColumn('nama', function ($row) {
+                return $row->nama ? $row->nama : '';
             });
 
             $table->editColumn('isin', function ($row) {

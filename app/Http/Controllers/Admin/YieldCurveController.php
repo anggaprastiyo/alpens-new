@@ -67,10 +67,6 @@ class YieldCurveController extends Controller
     {
         $yieldCurve = YieldCurve::create($request->all());
 
-        if ($request->input('source_file', false)) {
-            $yieldCurve->addMedia(storage_path('tmp/uploads/' . basename($request->input('source_file'))))->toMediaCollection('source_file');
-        }
-
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $yieldCurve->id]);
         }
@@ -88,17 +84,6 @@ class YieldCurveController extends Controller
     public function update(UpdateYieldCurveRequest $request, YieldCurve $yieldCurve)
     {
         $yieldCurve->update($request->all());
-
-        if ($request->input('source_file', false)) {
-            if (! $yieldCurve->source_file || $request->input('source_file') !== $yieldCurve->source_file->file_name) {
-                if ($yieldCurve->source_file) {
-                    $yieldCurve->source_file->delete();
-                }
-                $yieldCurve->addMedia(storage_path('tmp/uploads/' . basename($request->input('source_file'))))->toMediaCollection('source_file');
-            }
-        } elseif ($yieldCurve->source_file) {
-            $yieldCurve->source_file->delete();
-        }
 
         return redirect()->route('admin.yield-curves.index');
     }

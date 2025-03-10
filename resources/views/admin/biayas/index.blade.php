@@ -24,10 +24,10 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.biaya.fields.tanggal') }}
+                                    {{ trans('cruds.biaya.fields.nama') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.biaya.fields.name') }}
+                                    {{ trans('cruds.biaya.fields.tanggal') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -37,9 +37,9 @@
                                 <td>
                                 </td>
                                 <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -99,12 +99,12 @@
     ajax: "{{ route('admin.biayas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'nama', name: 'nama' },
 { data: 'tanggal', name: 'tanggal' },
-{ data: 'name', name: 'name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-Biaya').DataTable(dtOverrideGlobals);
