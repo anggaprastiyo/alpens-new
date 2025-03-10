@@ -24,9 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.obligasi.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.obligasi.fields.asset_migration') }}
                                 </th>
                                 <th>
@@ -59,9 +56,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
@@ -158,7 +152,6 @@
     ajax: "{{ route('admin.obligasis.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'asset_migration_name', name: 'asset_migration.name' },
 { data: 'program', name: 'program' },
 { data: 'level_3', name: 'level_3' },

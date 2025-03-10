@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.biayaDetail.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.biayaDetail.fields.program') }}
                                 </th>
                                 <th>
@@ -110,7 +107,6 @@
     ajax: "{{ route('admin.biaya-details.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'program', name: 'program' },
 { data: 'iuran', name: 'iuran' },
 { data: 'bop', name: 'bop' },

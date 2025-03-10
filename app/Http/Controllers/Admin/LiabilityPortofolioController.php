@@ -45,9 +45,6 @@ class LiabilityPortofolioController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->addColumn('biaya_name', function ($row) {
                 return $row->biaya ? $row->biaya->name : '';
             });

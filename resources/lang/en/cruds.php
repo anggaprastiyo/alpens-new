@@ -994,8 +994,8 @@ return [
         ],
     ],
     'liabilityTht' => [
-        'title'          => 'Liability THT',
-        'title_singular' => 'Liability THT',
+        'title'          => 'THT',
+        'title_singular' => 'THT',
         'fields'         => [
             'id'                                               => 'ID',
             'id_helper'                                        => ' ',

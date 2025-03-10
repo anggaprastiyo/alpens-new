@@ -24,9 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.assetMigration.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.assetMigration.fields.yield_curve') }}
                                 </th>
                                 <th>
@@ -50,9 +47,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
@@ -139,7 +133,6 @@
     ajax: "{{ route('admin.asset-migrations.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'yield_curve_version_name', name: 'yield_curve.version_name' },
 { data: 'portofolio_date', name: 'portofolio_date' },
 { data: 'jumlah_tahun', name: 'jumlah_tahun' },

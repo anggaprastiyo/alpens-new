@@ -25,9 +25,6 @@
 
                                     </th>
                                     <th>
-                                        {{ trans('cruds.liabilityJkm.fields.id') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.liabilityJkm.fields.liability_portofolio') }}
                                     </th>
                                     <th>
@@ -76,9 +73,6 @@
                                     <tr data-entry-id="{{ $liabilityJkm->id }}">
                                         <td>
 
-                                        </td>
-                                        <td>
-                                            {{ $liabilityJkm->id ?? '' }}
                                         </td>
                                         <td>
                                             {{ $liabilityJkm->liability_portofolio->name ?? '' }}

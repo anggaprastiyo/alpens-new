@@ -24,9 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.reksadana.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.reksadana.fields.asset_migration') }}
                                 </th>
                                 <th>
@@ -56,9 +53,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
@@ -157,7 +151,6 @@
     ajax: "{{ route('admin.reksadanas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'asset_migration_name', name: 'asset_migration.name' },
 { data: 'tipe_asset', name: 'tipe_asset' },
 { data: 'program', name: 'program' },

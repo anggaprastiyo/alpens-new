@@ -24,9 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.dataSap.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.dataSap.fields.report_date') }}
                                 </th>
                                 <th>
@@ -38,9 +35,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -105,7 +99,6 @@
     ajax: "{{ route('admin.data-saps.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'report_date', name: 'report_date' },
 { data: 'name', name: 'name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

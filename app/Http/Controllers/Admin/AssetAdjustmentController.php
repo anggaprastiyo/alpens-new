@@ -43,10 +43,6 @@ class AssetAdjustmentController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-
             $table->editColumn('tipe_asset', function ($row) {
                 return $row->tipe_asset ? $row->tipe_asset : '';
             });

@@ -41,9 +41,6 @@ class RdptController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->addColumn('asset_migration_name', function ($row) {
                 return $row->asset_migration ? $row->asset_migration->name : '';
             });

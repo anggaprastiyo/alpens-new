@@ -24,9 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.liabilityJkk.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.liabilityJkk.fields.liability_portofolio') }}
                                 </th>
                                 <th>
@@ -124,7 +121,6 @@
     ajax: "{{ route('admin.liability-jkks.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'liability_portofolio_name', name: 'liability_portofolio.name' },
 { data: 'skenario', name: 'skenario' },
 { data: 'tahun', name: 'tahun' },

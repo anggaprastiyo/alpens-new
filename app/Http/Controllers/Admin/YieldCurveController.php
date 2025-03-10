@@ -44,9 +44,6 @@ class YieldCurveController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('version_name', function ($row) {
                 return $row->version_name ? $row->version_name : '';
             });

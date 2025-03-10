@@ -44,9 +44,6 @@ class BopDetailController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->addColumn('bop_name', function ($row) {
                 return $row->bop ? $row->bop->name : '';
             });
