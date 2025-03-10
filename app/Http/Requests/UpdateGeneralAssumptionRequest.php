@@ -81,12 +81,11 @@ class UpdateGeneralAssumptionRequest extends FormRequest
                 'numeric',
                 'required',
             ],
-            'market_cap_saham' => [
+            'capital_gain_rdpt' => [
                 'numeric',
                 'required',
             ],
-            'capital_gain_rdpt' => [
-                'numeric',
+            'market_cap_saham' => [
                 'required',
             ],
         ];

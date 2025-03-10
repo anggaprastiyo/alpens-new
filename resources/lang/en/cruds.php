@@ -99,8 +99,6 @@ return [
             'capital_gain_reksadana_helper'    => ' ',
             'capital_gain_inv_langsung'        => 'Capital Gain Inv Langsung',
             'capital_gain_inv_langsung_helper' => ' ',
-            'market_cap_saham'                 => 'Market Cap Saham',
-            'market_cap_saham_helper'          => ' ',
             'capital_gain_rdpt'                => 'Capital Gain RDPT',
             'capital_gain_rdpt_helper'         => ' ',
             'created_at'                       => 'Created at',
@@ -111,6 +109,8 @@ return [
             'deleted_at_helper'                => ' ',
             'version_name'                     => 'Version Name',
             'version_name_helper'              => ' ',
+            'market_cap_saham'                 => 'Market Cap Saham',
+            'market_cap_saham_helper'          => ' ',
         ],
     ],
     'setting' => [

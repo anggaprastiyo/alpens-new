@@ -147,18 +147,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.generalAssumption.fields.market_cap_saham') }}
-                                    </th>
-                                    <td>
-                                        {{ $generalAssumption->market_cap_saham }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.generalAssumption.fields.capital_gain_rdpt') }}
                                     </th>
                                     <td>
                                         {{ $generalAssumption->capital_gain_rdpt }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.generalAssumption.fields.market_cap_saham') }}
+                                    </th>
+                                    <td>
+                                        {{ $generalAssumption->market_cap_saham }}
                                     </td>
                                 </tr>
                             </tbody>
