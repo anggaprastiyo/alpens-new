@@ -1,0 +1,25 @@
+version: '3.7'
+networks:
+  default:
+    name: alpens-network
+services:
+  mysql-80:
+    container_name: alpens-database
+    image: mysql:8.0
+    env_file:
+      - ./mysql/configuration
+    ports:
+      - 3306:3306
+  nginx:
+    container_name: alpens-server
+    image: nginx:latest
+    ports:
+      - 8085:80
+    volumes:
+      - ../../:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+  php-82:
+    container_name: alpens-application
+    build: ./php
+    volumes:
+      - ../../:/var/www/html
