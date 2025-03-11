@@ -52,6 +52,15 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.description_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('source_file') ? 'has-error' : '' }}">
+                            <label class="required" for="source_file">{{ trans('cruds.liabilityPortofolio.fields.source_file') }}</label>
+                            <div class="needsclick dropzone" id="source_file-dropzone">
+                            </div>
+                            @if($errors->has('source_file'))
+                                <span class="help-block" role="alert">{{ $errors->first('source_file') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.source_file_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('date') ? 'has-error' : '' }}">
                             <label class="required" for="date">{{ trans('cruds.liabilityPortofolio.fields.date') }}</label>
                             <input class="form-control date" type="text" name="date" id="date" value="{{ old('date', $liabilityPortofolio->date) }}" required>
@@ -59,70 +68,6 @@
                                 <span class="help-block" role="alert">{{ $errors->first('date') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.date_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('modified_duration_tht') ? 'has-error' : '' }}">
-                            <label for="modified_duration_tht">{{ trans('cruds.liabilityPortofolio.fields.modified_duration_tht') }}</label>
-                            <input class="form-control" type="number" name="modified_duration_tht" id="modified_duration_tht" value="{{ old('modified_duration_tht', $liabilityPortofolio->modified_duration_tht) }}" step="0.01">
-                            @if($errors->has('modified_duration_tht'))
-                                <span class="help-block" role="alert">{{ $errors->first('modified_duration_tht') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.modified_duration_tht_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('macaulay_duration_tht') ? 'has-error' : '' }}">
-                            <label for="macaulay_duration_tht">{{ trans('cruds.liabilityPortofolio.fields.macaulay_duration_tht') }}</label>
-                            <input class="form-control" type="number" name="macaulay_duration_tht" id="macaulay_duration_tht" value="{{ old('macaulay_duration_tht', $liabilityPortofolio->macaulay_duration_tht) }}" step="0.01">
-                            @if($errors->has('macaulay_duration_tht'))
-                                <span class="help-block" role="alert">{{ $errors->first('macaulay_duration_tht') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.macaulay_duration_tht_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('modified_duration_aip') ? 'has-error' : '' }}">
-                            <label for="modified_duration_aip">{{ trans('cruds.liabilityPortofolio.fields.modified_duration_aip') }}</label>
-                            <input class="form-control" type="number" name="modified_duration_aip" id="modified_duration_aip" value="{{ old('modified_duration_aip', $liabilityPortofolio->modified_duration_aip) }}" step="0.01">
-                            @if($errors->has('modified_duration_aip'))
-                                <span class="help-block" role="alert">{{ $errors->first('modified_duration_aip') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.modified_duration_aip_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('macaulay_duration_aip') ? 'has-error' : '' }}">
-                            <label for="macaulay_duration_aip">{{ trans('cruds.liabilityPortofolio.fields.macaulay_duration_aip') }}</label>
-                            <input class="form-control" type="number" name="macaulay_duration_aip" id="macaulay_duration_aip" value="{{ old('macaulay_duration_aip', $liabilityPortofolio->macaulay_duration_aip) }}" step="0.01">
-                            @if($errors->has('macaulay_duration_aip'))
-                                <span class="help-block" role="alert">{{ $errors->first('macaulay_duration_aip') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.macaulay_duration_aip_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('modified_duration_jkk') ? 'has-error' : '' }}">
-                            <label for="modified_duration_jkk">{{ trans('cruds.liabilityPortofolio.fields.modified_duration_jkk') }}</label>
-                            <input class="form-control" type="number" name="modified_duration_jkk" id="modified_duration_jkk" value="{{ old('modified_duration_jkk', $liabilityPortofolio->modified_duration_jkk) }}" step="0.01">
-                            @if($errors->has('modified_duration_jkk'))
-                                <span class="help-block" role="alert">{{ $errors->first('modified_duration_jkk') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.modified_duration_jkk_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('macaulay_duration_jkk') ? 'has-error' : '' }}">
-                            <label for="macaulay_duration_jkk">{{ trans('cruds.liabilityPortofolio.fields.macaulay_duration_jkk') }}</label>
-                            <input class="form-control" type="number" name="macaulay_duration_jkk" id="macaulay_duration_jkk" value="{{ old('macaulay_duration_jkk', $liabilityPortofolio->macaulay_duration_jkk) }}" step="0.01">
-                            @if($errors->has('macaulay_duration_jkk'))
-                                <span class="help-block" role="alert">{{ $errors->first('macaulay_duration_jkk') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.macaulay_duration_jkk_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('modified_duration_jkm') ? 'has-error' : '' }}">
-                            <label for="modified_duration_jkm">{{ trans('cruds.liabilityPortofolio.fields.modified_duration_jkm') }}</label>
-                            <input class="form-control" type="number" name="modified_duration_jkm" id="modified_duration_jkm" value="{{ old('modified_duration_jkm', $liabilityPortofolio->modified_duration_jkm) }}" step="0.01">
-                            @if($errors->has('modified_duration_jkm'))
-                                <span class="help-block" role="alert">{{ $errors->first('modified_duration_jkm') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.modified_duration_jkm_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('macaulay_duration_jkm') ? 'has-error' : '' }}">
-                            <label for="macaulay_duration_jkm">{{ trans('cruds.liabilityPortofolio.fields.macaulay_duration_jkm') }}</label>
-                            <input class="form-control" type="number" name="macaulay_duration_jkm" id="macaulay_duration_jkm" value="{{ old('macaulay_duration_jkm', $liabilityPortofolio->macaulay_duration_jkm) }}" step="0.01">
-                            @if($errors->has('macaulay_duration_jkm'))
-                                <span class="help-block" role="alert">{{ $errors->first('macaulay_duration_jkm') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.liabilityPortofolio.fields.macaulay_duration_jkm_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
@@ -138,4 +83,57 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    Dropzone.options.sourceFileDropzone = {
+    url: '{{ route('admin.liability-portofolios.storeMedia') }}',
+    maxFilesize: 10, // MB
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 10
+    },
+    success: function (file, response) {
+      $('form').find('input[name="source_file"]').remove()
+      $('form').append('<input type="hidden" name="source_file" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="source_file"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($liabilityPortofolio) && $liabilityPortofolio->source_file)
+      var file = {!! json_encode($liabilityPortofolio->source_file) !!}
+          this.options.addedfile.call(this, file)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="source_file" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
 @endsection

@@ -37,6 +37,9 @@
                                         {{ trans('cruds.liabilityPortofolio.fields.description') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.liabilityPortofolio.fields.source_file') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.liabilityPortofolio.fields.date') }}
                                     </th>
                                     <th>
@@ -61,6 +64,13 @@
                                         </td>
                                         <td>
                                             {{ $liabilityPortofolio->description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($liabilityPortofolio->source_file)
+                                                <a href="{{ $liabilityPortofolio->source_file->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             {{ $liabilityPortofolio->date ?? '' }}
