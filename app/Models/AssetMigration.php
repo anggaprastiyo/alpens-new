@@ -8,12 +8,19 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class AssetMigration extends Model
+class AssetMigration extends Model implements HasMedia
 {
-    use SoftDeletes, Auditable, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'asset_migrations';
+
+    protected $appends = [
+        'file_inv_langsung',
+    ];
 
     public const TYPE_SELECT = [
         'master'   => 'Master',
@@ -45,9 +52,20 @@ class AssetMigration extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
     public function yield_curve()
     {
         return $this->belongsTo(YieldCurve::class, 'yield_curve_id');
+    }
+
+    public function getFileInvLangsungAttribute()
+    {
+        return $this->getMedia('file_inv_langsung')->last();
     }
 
     public function getPortofolioDateAttribute($value)

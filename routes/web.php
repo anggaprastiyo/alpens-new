@@ -67,6 +67,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Asset Migration
     Route::delete('asset-migrations/destroy', 'AssetMigrationController@massDestroy')->name('asset-migrations.massDestroy');
+    Route::post('asset-migrations/media', 'AssetMigrationController@storeMedia')->name('asset-migrations.storeMedia');
+    Route::post('asset-migrations/ckmedia', 'AssetMigrationController@storeCKEditorImages')->name('asset-migrations.storeCKEditorImages');
     Route::resource('asset-migrations', 'AssetMigrationController');
 
     // Bop
@@ -117,6 +119,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Liability Portofolio
     Route::delete('liability-portofolios/destroy', 'LiabilityPortofolioController@massDestroy')->name('liability-portofolios.massDestroy');
+    Route::post('liability-portofolios/media', 'LiabilityPortofolioController@storeMedia')->name('liability-portofolios.storeMedia');
+    Route::post('liability-portofolios/ckmedia', 'LiabilityPortofolioController@storeCKEditorImages')->name('liability-portofolios.storeCKEditorImages');
     Route::resource('liability-portofolios', 'LiabilityPortofolioController');
 
     // Liability Jkk

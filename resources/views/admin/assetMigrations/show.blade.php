@@ -35,6 +35,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.assetMigration.fields.file_inv_langsung') }}
+                                    </th>
+                                    <td>
+                                        @if($assetMigration->file_inv_langsung)
+                                            <a href="{{ $assetMigration->file_inv_langsung->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.assetMigration.fields.portofolio_date') }}
                                     </th>
                                     <td>

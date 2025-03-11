@@ -24,6 +24,15 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.assetMigration.fields.yield_curve_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('file_inv_langsung') ? 'has-error' : '' }}">
+                            <label for="file_inv_langsung">{{ trans('cruds.assetMigration.fields.file_inv_langsung') }}</label>
+                            <div class="needsclick dropzone" id="file_inv_langsung-dropzone">
+                            </div>
+                            @if($errors->has('file_inv_langsung'))
+                                <span class="help-block" role="alert">{{ $errors->first('file_inv_langsung') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.assetMigration.fields.file_inv_langsung_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('portofolio_date') ? 'has-error' : '' }}">
                             <label class="required" for="portofolio_date">{{ trans('cruds.assetMigration.fields.portofolio_date') }}</label>
                             <input class="form-control date" type="text" name="portofolio_date" id="portofolio_date" value="{{ old('portofolio_date', $assetMigration->portofolio_date) }}" required>
@@ -83,4 +92,57 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    Dropzone.options.fileInvLangsungDropzone = {
+    url: '{{ route('admin.asset-migrations.storeMedia') }}',
+    maxFilesize: 10, // MB
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 10
+    },
+    success: function (file, response) {
+      $('form').find('input[name="file_inv_langsung"]').remove()
+      $('form').append('<input type="hidden" name="file_inv_langsung" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="file_inv_langsung"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($assetMigration) && $assetMigration->file_inv_langsung)
+      var file = {!! json_encode($assetMigration->file_inv_langsung) !!}
+          this.options.addedfile.call(this, file)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="file_inv_langsung" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
 @endsection

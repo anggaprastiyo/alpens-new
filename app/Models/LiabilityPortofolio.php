@@ -8,12 +8,19 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class LiabilityPortofolio extends Model
+class LiabilityPortofolio extends Model implements HasMedia
 {
-    use SoftDeletes, Auditable, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'liability_portofolios';
+
+    protected $appends = [
+        'source_file',
+    ];
 
     protected $dates = [
         'date',
@@ -46,6 +53,12 @@ class LiabilityPortofolio extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
     public function biaya()
     {
         return $this->belongsTo(Biaya::class, 'biaya_id');
@@ -54,6 +67,11 @@ class LiabilityPortofolio extends Model
     public function yield_curve()
     {
         return $this->belongsTo(YieldCurve::class, 'yield_curve_id');
+    }
+
+    public function getSourceFileAttribute()
+    {
+        return $this->getMedia('source_file')->last();
     }
 
     public function getDateAttribute($value)

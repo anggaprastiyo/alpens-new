@@ -18,123 +18,109 @@ class StoreAssetAdjustmentRequest extends FormRequest
     {
         return [
             'portfolio_date' => [
-                'required',
                 'date_format:' . config('panel.date_format'),
+                'nullable',
             ],
             'tipe_asset' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'program' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'level_1' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'level_2' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'level_3' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'ticker' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'name' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'nama_bank' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'nomor_bilyet' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'nama_mi' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'rating' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'tanggal_perolehan' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'tanggal_maturity' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'nilai_nominal' => [
                 'numeric',
             ],
             'nilai_perolehan' => [
                 'numeric',
-                'required',
             ],
             'harga_perolehan' => [
                 'numeric',
-                'required',
             ],
             'kupon' => [
                 'numeric',
-                'required',
             ],
             'pembagian_kupon' => [
-                'required',
+                'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
             ],
             'bunga' => [
                 'numeric',
-                'required',
             ],
             'pembagian_bunga' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'harga_pasar' => [
                 'numeric',
-                'required',
             ],
             'nilai_pasar' => [
                 'numeric',
-                'required',
-            ],
-            'nilai_tercatat' => [
-                'required',
             ],
             'potential' => [
                 'numeric',
-                'required',
             ],
             'lembar_saham' => [
-                'required',
+                'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
             ],
             'deviden_saham' => [
                 'numeric',
-                'required',
             ],
             'pembagian_deviden_saham' => [
-                'required',
+                'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
-            ],
-            'market_cap_saham' => [
-                'required',
             ],
             'type_reksadana' => [
                 'string',
@@ -142,101 +128,81 @@ class StoreAssetAdjustmentRequest extends FormRequest
             ],
             'unit_penyertaan' => [
                 'numeric',
-                'required',
             ],
             'nab' => [
                 'numeric',
-                'required',
             ],
             'time_to_maturity' => [
-                'required',
+                'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
             ],
             'yield_to_maturity' => [
                 'numeric',
-                'required',
             ],
             'faktor_pengurang' => [
                 'numeric',
-                'required',
             ],
             'tenor' => [
                 'numeric',
-                'required',
             ],
             'sisa_tenor' => [
                 'numeric',
-                'required',
             ],
             'macaulay_duration' => [
                 'numeric',
-                'required',
             ],
             'modified_duration' => [
                 'numeric',
-                'required',
             ],
             'convexity_apporximation' => [
                 'numeric',
-                'required',
             ],
             'bobot_macaulay_duration' => [
                 'numeric',
-                'required',
             ],
             'bobot_modified_duration' => [
                 'numeric',
-                'required',
             ],
             'bobot_convexity_apporximation' => [
                 'numeric',
-                'required',
             ],
             'tanggal_saldo_awal' => [
-                'required',
                 'date_format:' . config('panel.date_format'),
+                'nullable',
             ],
             'tanggal_add_set_modal' => [
-                'required',
                 'date_format:' . config('panel.date_format'),
+                'nullable',
             ],
             'nilai_investasi' => [
                 'numeric',
-                'required',
             ],
             'pelunasan_shl' => [
                 'numeric',
-                'required',
             ],
             'tambahan_setoran_modal' => [
                 'numeric',
-                'required',
             ],
             'div_yield_bunga' => [
                 'numeric',
-                'required',
             ],
             'pembagian_div_yield_bunga' => [
                 'numeric',
-                'required',
             ],
             'projected_add_yield' => [
                 'numeric',
-                'required',
             ],
             'divestasi' => [
                 'numeric',
-                'required',
             ],
             'tanggal_divestasi' => [
-                'required',
                 'date_format:' . config('panel.date_format'),
+                'nullable',
             ],
             'harga_perolehan_divestasi' => [
                 'numeric',
-                'required',
             ],
         ];
     }
