@@ -389,6 +389,8 @@ return [
             'updated_at_helper'               => ' ',
             'deleted_at'                      => 'Deleted at',
             'deleted_at_helper'               => ' ',
+            'file_inv_langsung'               => 'File Inv Langsung',
+            'file_inv_langsung_helper'        => ' ',
         ],
     ],
     'bop' => [
@@ -871,6 +873,8 @@ return [
             'updated_at_helper'            => ' ',
             'deleted_at'                   => 'Deleted at',
             'deleted_at_helper'            => ' ',
+            'source_file'                  => 'Source File',
+            'source_file_helper'           => ' ',
         ],
     ],
     'liabilityJkk' => [

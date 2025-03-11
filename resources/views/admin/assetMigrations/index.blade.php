@@ -28,6 +28,9 @@
                                         {{ trans('cruds.assetMigration.fields.yield_curve') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.assetMigration.fields.file_inv_langsung') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.assetMigration.fields.portofolio_date') }}
                                     </th>
                                     <th>
@@ -55,6 +58,13 @@
                                         </td>
                                         <td>
                                             {{ $assetMigration->yield_curve->version_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($assetMigration->file_inv_langsung)
+                                                <a href="{{ $assetMigration->file_inv_langsung->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             {{ $assetMigration->portofolio_date ?? '' }}

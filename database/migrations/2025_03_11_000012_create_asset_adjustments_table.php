@@ -24,7 +24,7 @@ class CreateAssetAdjustmentsTable extends Migration
             $table->string('rating')->nullable();
             $table->string('tanggal_perolehan')->nullable();
             $table->string('tanggal_maturity')->nullable();
-            $table->float('nilai_nominal', 15, 2)->nullable()->nullable();
+            $table->float('nilai_nominal', 15, 2)->nullable();
             $table->float('nilai_perolehan', 15, 2)->nullable();
             $table->float('harga_perolehan', 15, 2)->nullable();
             $table->float('kupon', 15, 2)->nullable();
@@ -39,7 +39,7 @@ class CreateAssetAdjustmentsTable extends Migration
             $table->float('deviden_saham', 15, 2)->nullable();
             $table->integer('pembagian_deviden_saham')->nullable();
             $table->decimal('market_cap_saham', 15, 2)->nullable();
-            $table->string('type_reksadana')->nullable()->nullable();
+            $table->string('type_reksadana')->nullable();
             $table->float('unit_penyertaan', 15, 2)->nullable();
             $table->float('nab', 15, 2)->nullable();
             $table->integer('time_to_maturity')->nullable();

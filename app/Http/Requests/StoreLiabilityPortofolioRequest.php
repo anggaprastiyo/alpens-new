@@ -25,33 +25,12 @@ class StoreLiabilityPortofolioRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'source_file' => [
+                'required',
+            ],
             'date' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
-            ],
-            'modified_duration_tht' => [
-                'numeric',
-            ],
-            'macaulay_duration_tht' => [
-                'numeric',
-            ],
-            'modified_duration_aip' => [
-                'numeric',
-            ],
-            'macaulay_duration_aip' => [
-                'numeric',
-            ],
-            'modified_duration_jkk' => [
-                'numeric',
-            ],
-            'macaulay_duration_jkk' => [
-                'numeric',
-            ],
-            'modified_duration_jkm' => [
-                'numeric',
-            ],
-            'macaulay_duration_jkm' => [
-                'numeric',
             ],
         ];
     }

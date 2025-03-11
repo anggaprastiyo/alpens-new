@@ -17,45 +17,59 @@ class UpdateAssetAdjustmentRequest extends FormRequest
         return [
             'portfolio_date' => [
                 'date_format:'.config('panel.date_format'),
+                'nullable',
             ],
             'tipe_asset' => [
                 'string',
+                'nullable',
             ],
             'program' => [
                 'string',
+                'nullable',
             ],
             'level_1' => [
                 'string',
+                'nullable',
             ],
             'level_2' => [
                 'string',
+                'nullable',
             ],
             'level_3' => [
                 'string',
+                'nullable',
             ],
             'ticker' => [
                 'string',
+                'nullable',
             ],
             'name' => [
                 'string',
+                'nullable',
             ],
             'nama_bank' => [
                 'string',
+                'nullable',
             ],
             'nomor_bilyet' => [
                 'string',
+                'nullable',
             ],
             'nama_mi' => [
                 'string',
+                'nullable',
             ],
             'rating' => [
                 'string',
+                'nullable',
             ],
             'tanggal_perolehan' => [
                 'string',
+                'nullable',
             ],
             'tanggal_maturity' => [
                 'string',
+                'nullable',
             ],
             'nilai_nominal' => [
                 'numeric',
@@ -70,6 +84,7 @@ class UpdateAssetAdjustmentRequest extends FormRequest
                 'numeric',
             ],
             'pembagian_kupon' => [
+                'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
@@ -79,6 +94,7 @@ class UpdateAssetAdjustmentRequest extends FormRequest
             ],
             'pembagian_bunga' => [
                 'string',
+                'nullable',
             ],
             'harga_pasar' => [
                 'numeric',
@@ -90,6 +106,7 @@ class UpdateAssetAdjustmentRequest extends FormRequest
                 'numeric',
             ],
             'lembar_saham' => [
+                'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
@@ -98,6 +115,7 @@ class UpdateAssetAdjustmentRequest extends FormRequest
                 'numeric',
             ],
             'pembagian_deviden_saham' => [
+                'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
@@ -113,6 +131,7 @@ class UpdateAssetAdjustmentRequest extends FormRequest
                 'numeric',
             ],
             'time_to_maturity' => [
+                'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
@@ -149,9 +168,11 @@ class UpdateAssetAdjustmentRequest extends FormRequest
             ],
             'tanggal_saldo_awal' => [
                 'date_format:'.config('panel.date_format'),
+                'nullable',
             ],
             'tanggal_add_set_modal' => [
                 'date_format:'.config('panel.date_format'),
+                'nullable',
             ],
             'nilai_investasi' => [
                 'numeric',
@@ -176,6 +197,7 @@ class UpdateAssetAdjustmentRequest extends FormRequest
             ],
             'tanggal_divestasi' => [
                 'date_format:'.config('panel.date_format'),
+                'nullable',
             ],
             'harga_perolehan_divestasi' => [
                 'numeric',
