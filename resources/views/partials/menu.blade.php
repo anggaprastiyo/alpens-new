@@ -140,7 +140,7 @@
                             </li>
                         @endcan
                         @can('data_sap_access')
-                            <li class="{{ request()->is("admin/data-saps") || request()->is("admin/data-saps/*") ? "active" : "" }}">
+                            <li class="{{ request()->is("admin/data-saps*") || request()->is("admin/data-sap-details*") ? "active" : "" }}">
                                 <a href="{{ route("admin.data-saps.index") }}">
                                     <i class="fa-fw fas fa-list-ul">
 
@@ -183,17 +183,17 @@
 {{--                                </a>--}}
 {{--                            </li>--}}
 {{--                        @endcan--}}
-                        @can('data_sap_detail_access')
-                            <li class="{{ request()->is("admin/data-sap-details") || request()->is("admin/data-sap-details/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.data-sap-details.index") }}">
-                                    <i class="fa-fw far fa-circle">
+{{--                        @can('data_sap_detail_access')--}}
+{{--                            <li class="{{ request()->is("admin/data-sap-details") || request()->is("admin/data-sap-details/*") ? "active" : "" }}">--}}
+{{--                                <a href="{{ route("admin.data-sap-details.index") }}">--}}
+{{--                                    <i class="fa-fw far fa-circle">--}}
 
-                                    </i>
-                                    <span>{{ trans('cruds.dataSapDetail.title') }}</span>
+{{--                                    </i>--}}
+{{--                                    <span>{{ trans('cruds.dataSapDetail.title') }}</span>--}}
 
-                                </a>
-                            </li>
-                        @endcan
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endcan--}}
                     </ul>
                 </li>
             @endcan
