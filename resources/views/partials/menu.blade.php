@@ -96,7 +96,7 @@
                                 </li>
                         @endcan
                         @can('biaya_access')
-                            <li class="{{ request()->is("admin/biayas") || request()->is("admin/biayas/*") ? "active" : "" }}">
+                            <li class="{{ request()->is("admin/biayas*") || request()->is("admin/biaya-details*") ? "active" : "" }}">
                                 <a href="{{ route("admin.biayas.index") }}">
                                     <i class="fa-fw fas fa-dollar-sign">
 
@@ -161,17 +161,17 @@
 {{--                                </a>--}}
 {{--                            </li>--}}
 {{--                        @endcan--}}
-                        @can('biaya_detail_access')
-                            <li class="{{ request()->is("admin/biaya-details") || request()->is("admin/biaya-details/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.biaya-details.index") }}">
-                                    <i class="fa-fw far fa-circle">
+{{--                        @can('biaya_detail_access')--}}
+{{--                            <li class="{{ request()->is("admin/biaya-details") || request()->is("admin/biaya-details/*") ? "active" : "" }}">--}}
+{{--                                <a href="{{ route("admin.biaya-details.index") }}">--}}
+{{--                                    <i class="fa-fw far fa-circle">--}}
 
-                                    </i>
-                                    <span>{{ trans('cruds.biayaDetail.title') }}</span>
+{{--                                    </i>--}}
+{{--                                    <span>{{ trans('cruds.biayaDetail.title') }}</span>--}}
 
-                                </a>
-                            </li>
-                        @endcan
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endcan--}}
                         @can('bop_detail_access')
                             <li class="{{ request()->is("admin/bop-details") || request()->is("admin/bop-details/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.bop-details.index") }}">

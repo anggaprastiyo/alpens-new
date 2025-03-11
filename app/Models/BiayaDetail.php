@@ -21,10 +21,10 @@ class BiayaDetail extends Model
     ];
 
     public const PROGRAM_SELECT = [
-        'tht'     => 'THT',
-        'pensiun' => 'Pensiun',
-        'jkk'     => 'JKK',
-        'jkm'     => 'JKM',
+        'THT'     => 'THT',
+        'PENSIUN' => 'PENSIUN',
+        'JKK'     => 'JKK',
+        'JKM'     => 'JKM',
     ];
 
     protected $fillable = [

@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('admin.biaya-details.index') }}">
+                            <a class="btn btn-default" href="{{ route('admin.biaya-details.index', ['id' => $biayaDetail->biaya_id]) }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>
@@ -46,7 +46,7 @@
                                         {{ trans('cruds.biayaDetail.fields.iuran') }}
                                     </th>
                                     <td>
-                                        {{ $biayaDetail->iuran }}
+                                        {{ number_format($biayaDetail->iuran) }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -54,7 +54,7 @@
                                         {{ trans('cruds.biayaDetail.fields.bop') }}
                                     </th>
                                     <td>
-                                        {{ $biayaDetail->bop }}
+                                        {{ number_format($biayaDetail->bop) }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -62,7 +62,7 @@
                                         {{ trans('cruds.biayaDetail.fields.biaya_operasional') }}
                                     </th>
                                     <td>
-                                        {{ $biayaDetail->biaya_operasional }}
+                                        {{ number_format($biayaDetail->biaya_operasional) }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -70,7 +70,7 @@
                                         {{ trans('cruds.biayaDetail.fields.rkap_iuran') }}
                                     </th>
                                     <td>
-                                        {{ $biayaDetail->rkap_iuran }}
+                                        {{ number_format($biayaDetail->rkap_iuran) }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -78,7 +78,7 @@
                                         {{ trans('cruds.biayaDetail.fields.rkap_bop') }}
                                     </th>
                                     <td>
-                                        {{ $biayaDetail->rkap_bop }}
+                                        {{ number_format($biayaDetail->rkap_bop) }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -86,13 +86,13 @@
                                         {{ trans('cruds.biayaDetail.fields.rkap_biaya_operasional') }}
                                     </th>
                                     <td>
-                                        {{ $biayaDetail->rkap_biaya_operasional }}
+                                        {{ number_format($biayaDetail->rkap_biaya_operasional) }}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('admin.biaya-details.index') }}">
+                            <a class="btn btn-default" href="{{ route('admin.biaya-details.index', ['id' => $biayaDetail->biaya_id]) }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>
