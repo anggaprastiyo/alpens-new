@@ -129,7 +129,7 @@
                             </li>
                         @endcan
                         @can('bop_access')
-                            <li class="{{ request()->is("admin/bops") || request()->is("admin/bops/*") ? "active" : "" }}">
+                            <li class="{{ request()->is("admin/bops*") || request()->is("admin/bop-details*") ? "active" : "" }}">
                                 <a href="{{ route("admin.bops.index") }}">
                                     <i class="fa-fw fas fa-file-invoice-dollar">
 
@@ -172,17 +172,17 @@
 {{--                                </a>--}}
 {{--                            </li>--}}
 {{--                        @endcan--}}
-                        @can('bop_detail_access')
-                            <li class="{{ request()->is("admin/bop-details") || request()->is("admin/bop-details/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.bop-details.index") }}">
-                                    <i class="fa-fw far fa-circle">
+{{--                        @can('bop_detail_access')--}}
+{{--                            <li class="{{ request()->is("admin/bop-details") || request()->is("admin/bop-details/*") ? "active" : "" }}">--}}
+{{--                                <a href="{{ route("admin.bop-details.index") }}">--}}
+{{--                                    <i class="fa-fw far fa-circle">--}}
 
-                                    </i>
-                                    <span>{{ trans('cruds.bopDetail.title') }}</span>
+{{--                                    </i>--}}
+{{--                                    <span>{{ trans('cruds.bopDetail.title') }}</span>--}}
 
-                                </a>
-                            </li>
-                        @endcan
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endcan--}}
                         @can('data_sap_detail_access')
                             <li class="{{ request()->is("admin/data-sap-details") || request()->is("admin/data-sap-details/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.data-sap-details.index") }}">

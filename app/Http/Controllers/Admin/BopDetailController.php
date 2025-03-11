@@ -17,20 +17,23 @@ class BopDetailController extends Controller
 {
     use CsvImportTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('bop_detail_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bopDetails = BopDetail::with(['bop'])->get();
+        $bop = Bop::find($request->input('id'));
+        $bopDetails = BopDetail::with(['bop'])
+            ->where('bop_id', $request->input('id'))
+            ->get();
 
-        return view('admin.bopDetails.index', compact('bopDetails'));
+        return view('admin.bopDetails.index', compact('bopDetails', 'bop'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         abort_if(Gate::denies('bop_detail_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bops = Bop::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $bops = Bop::where('id', $request->input('id'))->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.bopDetails.create', compact('bops'));
     }
@@ -39,15 +42,14 @@ class BopDetailController extends Controller
     {
         $bopDetail = BopDetail::create($request->all());
 
-        return redirect()->route('admin.bop-details.index');
+        return redirect()->route('admin.bop-details.index', ['id' => $request->input('bop_id')]);
     }
 
     public function edit(BopDetail $bopDetail)
     {
         abort_if(Gate::denies('bop_detail_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bops = Bop::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        $bops = Bop::where('id', $bopDetail->bop_id)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bopDetail->load('bop');
 
         return view('admin.bopDetails.edit', compact('bopDetail', 'bops'));
@@ -57,7 +59,7 @@ class BopDetailController extends Controller
     {
         $bopDetail->update($request->all());
 
-        return redirect()->route('admin.bop-details.index');
+        return redirect()->route('admin.bop-details.index', ['id' => $request->input('bop_id')]);
     }
 
     public function show(BopDetail $bopDetail)
