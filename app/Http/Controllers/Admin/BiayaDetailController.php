@@ -17,20 +17,20 @@ class BiayaDetailController extends Controller
 {
     use CsvImportTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('biaya_detail_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $biaya = Biaya::find($request->input('id'));
         $biayaDetails = BiayaDetail::with(['biaya'])->get();
 
-        return view('admin.biayaDetails.index', compact('biayaDetails'));
+        return view('admin.biayaDetails.index', compact('biayaDetails', 'biaya'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         abort_if(Gate::denies('biaya_detail_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $biayas = Biaya::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $biayas = Biaya::where('id', $request->input('id'))->pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.biayaDetails.create', compact('biayas'));
     }
@@ -39,7 +39,7 @@ class BiayaDetailController extends Controller
     {
         $biayaDetail = BiayaDetail::create($request->all());
 
-        return redirect()->route('admin.biaya-details.index');
+        return redirect()->route('admin.biaya-details.index', ['id' => $request->input('biaya_id')]);
     }
 
     public function edit(BiayaDetail $biayaDetail)
@@ -55,7 +55,7 @@ class BiayaDetailController extends Controller
     {
         $biayaDetail->update($request->all());
 
-        return redirect()->route('admin.biaya-details.index');
+        return redirect()->route('admin.biaya-details.index', ['id' => $request->input('biaya_id')]);
     }
 
     public function show(BiayaDetail $biayaDetail)

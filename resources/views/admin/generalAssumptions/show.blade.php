@@ -158,7 +158,7 @@
                                         {{ trans('cruds.generalAssumption.fields.market_cap_saham') }}
                                     </th>
                                     <td>
-                                        {{ $generalAssumption->market_cap_saham }}
+                                        {{ number_format($generalAssumption->market_cap_saham) }}
                                     </td>
                                 </tr>
                             </tbody>
