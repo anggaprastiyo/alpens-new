@@ -79,7 +79,7 @@
                                             {{ $generalAssumption->kenaikan_bop_pertahun ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $generalAssumption->market_cap_saham ?? '' }}
+                                            {{ number_format($generalAssumption->market_cap_saham) ?? '' }}
                                         </td>
                                         <td>
                                             @can('general_assumption_show')
