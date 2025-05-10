@@ -18,7 +18,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('cruds.biayaDetail.title_singular') }} {{ trans('global.list') }}
+                    {{ trans('cruds.biayaDetail.title_singular') }} {{ trans('global.list') }} | <b>{{ $biaya->nama }} - ID = {{ $biaya->id }}</b>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -64,22 +64,22 @@
                                             {{ App\Models\BiayaDetail::PROGRAM_SELECT[$biayaDetail->program] ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $biayaDetail->iuran ?? '' }}
+                                            {{ number_format($biayaDetail->iuran) ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $biayaDetail->bop ?? '' }}
+                                            {{ number_format($biayaDetail->bop) ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $biayaDetail->biaya_operasional ?? '' }}
+                                            {{ number_format($biayaDetail->biaya_operasional) ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $biayaDetail->rkap_iuran ?? '' }}
+                                            {{ number_format($biayaDetail->rkap_iuran) ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $biayaDetail->rkap_bop ?? '' }}
+                                            {{ number_format($biayaDetail->rkap_bop) ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $biayaDetail->rkap_biaya_operasional ?? '' }}
+                                            {{ number_format($biayaDetail->rkap_biaya_operasional) ?? '' }}
                                         </td>
                                         <td>
                                             @can('biaya_detail_show')
@@ -111,9 +111,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </div>
@@ -165,6 +162,5 @@
   });
   
 })
-
 </script>
 @endsection

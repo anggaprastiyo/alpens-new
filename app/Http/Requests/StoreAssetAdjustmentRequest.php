@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\AssetAdjustment;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StoreAssetAdjustmentRequest extends FormRequest
 {
@@ -18,7 +16,7 @@ class StoreAssetAdjustmentRequest extends FormRequest
     {
         return [
             'portfolio_date' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
             'tipe_asset' => [
@@ -169,11 +167,11 @@ class StoreAssetAdjustmentRequest extends FormRequest
                 'numeric',
             ],
             'tanggal_saldo_awal' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
             'tanggal_add_set_modal' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
             'nilai_investasi' => [
@@ -198,7 +196,7 @@ class StoreAssetAdjustmentRequest extends FormRequest
                 'numeric',
             ],
             'tanggal_divestasi' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
             'harga_perolehan_divestasi' => [

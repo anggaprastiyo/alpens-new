@@ -44,31 +44,35 @@ class YieldCurveController extends Controller
         return redirect()->route('admin.yield-curves.index');
     }
 
-    public function edit(YieldCurve $yieldCurve)
+    public function edit($id)
     {
         abort_if(Gate::denies('yield_curve_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $yieldCurve = YieldCurve::find($id);
 
         return view('admin.yieldCurves.edit', compact('yieldCurve'));
     }
 
-    public function update(UpdateYieldCurveRequest $request, YieldCurve $yieldCurve)
+    public function update(UpdateYieldCurveRequest $request, $id)
     {
+        $yieldCurve = YieldCurve::find($id);
         $yieldCurve->update($request->all());
 
         return redirect()->route('admin.yield-curves.index');
     }
 
-    public function show(YieldCurve $yieldCurve)
+    public function show($id)
     {
         abort_if(Gate::denies('yield_curve_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $yieldCurve = YieldCurve::find($id);
 
         return view('admin.yieldCurves.show', compact('yieldCurve'));
     }
 
-    public function destroy(YieldCurve $yieldCurve)
+    public function destroy($id)
     {
         abort_if(Gate::denies('yield_curve_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $yieldCurve = YieldCurve::find($id);
         $yieldCurve->delete();
 
         return back();
@@ -89,10 +93,10 @@ class YieldCurveController extends Controller
     {
         abort_if(Gate::denies('yield_curve_create') && Gate::denies('yield_curve_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new YieldCurve();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new YieldCurve;
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
